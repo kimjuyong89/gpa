@@ -18,6 +18,7 @@ namespace GPA.UI
             ["점소이"] = "Villager", ["흑사방 졸개"] = "NinjaDark", ["흑사방 연락책"] = "NinjaGray", ["소육"] = "Child",
             ["윤백산"] = "Master", ["탁웅"] = "Samurai", ["창고지기"] = "NinjaRed", ["고진악"] = "NinjaBlue", ["은둔 노인"] = "OldMan",
             ["장터 상인"] = "OldMan", ["석두"] = "Monk", ["운학"] = "FighterWhite", ["연아"] = "Woman",
+            ["백설화"] = "Woman", ["홍련"] = "NinjaRed", ["묵향"] = "Woman", ["유소소"] = "Villager", ["능소"] = "FighterWhite",
         };
 
         public readonly VisualElement Root = Ui.Box("fill");

@@ -16,9 +16,9 @@ MonoBehaviour:
 
     .,,..C....T.....T..,....,.......
 
-    ......,.......,..,,.....,.......
+    ......,......u,..,,.....,.......
 
-    ..........,........,......,.,,..
+    ...x......,........,......,.,,..
 
     .,,.,.5=,.........h.,,==b...,.T.
 
@@ -28,7 +28,7 @@ MonoBehaviour:
 
     ......==.........,....==........
 
-    ......==.....1..,..,..==.......,
+    ......==.....1.v,..,..==.......,
 
     E===========@===================
 
@@ -40,9 +40,9 @@ MonoBehaviour:
 
     ,...,W,......==.....,,..,...,.,.
 
-    ........,.,..==......,.,.....,..
+    ..s.....,.,..==......,.,.....,..
 
-    ............,==.,...,....6......
+    ............,==.,...,....6...t..
 
     ....==7=======2==============..,
 
@@ -183,6 +183,26 @@ MonoBehaviour:
     name: "\uC5F0\uC544"
     sheet: {fileID: 2800000, guid: d7ce2e80ef9fe3f49af0e29744beb4d7, type: 3}
     knot: "\uC18C\uB140_\uC5F0\uC544"
+  - key: s
+    name: "\uBC31\uC124\uD654"
+    sheet: {fileID: 2800000, guid: d7ce2e80ef9fe3f49af0e29744beb4d7, type: 3}
+    knot: "\uC57D\uCD08\uAFBC_\uBC31\uC124\uD654"
+  - key: t
+    name: "\uD64D\uB828"
+    sheet: {fileID: 2800000, guid: 994e2165d1481844aa8d56bce72579df, type: 3}
+    knot: "\uAC80\uAC1D_\uD64D\uB828"
+  - key: u
+    name: "\uBB35\uD5A5"
+    sheet: {fileID: 2800000, guid: d7ce2e80ef9fe3f49af0e29744beb4d7, type: 3}
+    knot: "\uC11C\uC0DD_\uBB35\uD5A5"
+  - key: v
+    name: "\uC720\uC18C\uC18C"
+    sheet: {fileID: 2800000, guid: d85be8fbc8baba948b5e45bc66f0db15, type: 3}
+    knot: "\uAC1D\uC794_\uC720\uC18C\uC18C"
+  - key: x
+    name: "\uB2A5\uC18C"
+    sheet: {fileID: 2800000, guid: 5250680745645914ba16be154dabd870, type: 3}
+    knot: "\uC678\uBB38_\uB2A5\uC18C"
   start: '@'
   exit: E
   specialGround: =

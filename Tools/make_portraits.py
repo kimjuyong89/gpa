@@ -82,6 +82,12 @@ FIGURES = {
 FIGURES['석두'] = body('VILLAGE_CHILDREN_WX_MIX_1', kid=0)
 FIGURES['운학'] = body('VILLAGE_CHILDREN_WX_MIX_1', kid=2)
 FIGURES['연아'] = body('VILLAGE_CHILDREN_WX_DUSKY', kid=2)
+# 여자 동료 다섯. ARAVIND 한 인물의 의상·머리색 변형이라 얼굴이 같다. 인물별 그림은 구할 때 바꾼다.
+FIGURES['백설화'] = body('ARAVIND_XIANXIA_GREENTEA')
+FIGURES['홍련'] = body('ARAVIND_XIANXIA_SHRINEGUARD')
+FIGURES['묵향'] = body('ARAVIND_XIANXIA_DEMONSECT')
+FIGURES['유소소'] = body('ARAVIND_XIANXIA_BLOSSOM')
+FIGURES['능소'] = body('ARAVIND_XIANXIA_SEABLUE')
 # 폐관수련의 심마: 주인공을 먹과 핏빛으로 물들인 그림자
 for i in range(1, 5):
     FIGURES[f'심마{i}'] = ink(FIGURES[f'주인공{i}'], 0.4, (54, 18, 16))
