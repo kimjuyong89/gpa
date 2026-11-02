@@ -1,114 +1,116 @@
+using System.Linq;
 using GPA.Combat;
 using GPA.Growth;
+using GPA.Narrative;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEngine;
 
 namespace GPA.Tests
 {
-    // 내공 속성: 음, 양, 음양조화.
+    // 내공 루트: 음이냐 양이냐는 배울 수 있는 심법만 가른다. 전투에는 영향이 없다.
     public class NatureTests
     {
-        static MartialArt Outer(Affinity affinity = Affinity.None)
+        static MartialArt Mind(InnerNature nature)
         {
             var a = ScriptableObject.CreateInstance<MartialArt>();
-            a.kind = ArtKind.Outer;
-            a.power = 100;
-            a.affinity = affinity;
-            a.lineage = Lineage.Orthodox;
+            a.kind = ArtKind.Mind;
+            a.nature = nature;
             return a;
         }
 
-        static Combatant Unit(InnerNature nature, bool ally = true) =>
-            new("가", ally, new Stats { Con = 50 }, new[] { Outer() }) { Nature = nature };
+        static Character Hero(params MartialArt[] arts) => new("나", new Stats(), arts);
 
-        [TestCase(InnerNature.Yin, InnerNature.Yang, 1.15f)]
-        [TestCase(InnerNature.Yang, InnerNature.Yin, 1.15f)]
-        [TestCase(InnerNature.Yang, InnerNature.Yang, 1f)]
-        [TestCase(InnerNature.Yin, InnerNature.Yin, 1f)]
-        [TestCase(InnerNature.None, InnerNature.Yin, 1f)]
-        [TestCase(InnerNature.Yin, InnerNature.None, 1f)]
-        [TestCase(InnerNature.Harmony, InnerNature.Yin, 1.15f)]
-        [TestCase(InnerNature.Harmony, InnerNature.Yang, 1.15f)]
-        [TestCase(InnerNature.Harmony, InnerNature.None, 1f)]
-        [TestCase(InnerNature.Harmony, InnerNature.Harmony, 1f)]
-        [TestCase(InnerNature.Yin, InnerNature.Harmony, 1f)]
-        [TestCase(InnerNature.Yang, InnerNature.Harmony, 1f)]
-        public void OpposedNaturesHitHarder(InnerNature attacker, InnerNature target, float expected)
+        [Test]
+        public void BasicMindLeavesTheRouteOpen()
         {
-            Assert.AreEqual(expected, Unit(attacker).NatureMultiplier(Unit(target)), 0.001f);
-        }
-
-        [TestCase(InnerNature.Yang, Affinity.Gang, 1.1f)]
-        [TestCase(InnerNature.Yang, Affinity.Yu, 1f)]
-        [TestCase(InnerNature.Yin, Affinity.Yu, 1.1f)]
-        [TestCase(InnerNature.Yin, Affinity.Gang, 1f)]
-        [TestCase(InnerNature.Harmony, Affinity.Gang, 1.1f)]
-        [TestCase(InnerNature.Harmony, Affinity.Yu, 1.1f)]
-        [TestCase(InnerNature.Yang, Affinity.Kwae, 1f)]
-        [TestCase(InnerNature.None, Affinity.Gang, 1f)]
-        public void NatureFavorsItsKindOfArt(InnerNature nature, Affinity affinity, float expected)
-        {
-            Assert.AreEqual(expected, Unit(nature).NatureArtBonus(Outer(affinity)), 0.001f);
+            var h = Hero(Mind(InnerNature.None));
+            Assert.AreEqual(InnerNature.None, h.Route);
+            Assert.IsTrue(h.CanLearnMind(Mind(InnerNature.Yin)));
+            Assert.IsTrue(h.CanLearnMind(Mind(InnerNature.Yang)));
         }
 
         [Test]
-        public void BasicArtsGainNothingFromNature()
+        public void YangRouteLearnsOnlyYang()
         {
-            var basic = Outer(Affinity.Gang);
-            basic.lineage = Lineage.Common;
-            Assert.AreEqual(1f, Unit(InnerNature.Yang).NatureArtBonus(basic));
+            var h = Hero(Mind(InnerNature.None), Mind(InnerNature.Yang));
+            Assert.AreEqual(InnerNature.Yang, h.Route);
+            Assert.IsTrue(h.CanLearnMind(Mind(InnerNature.Yang)));
+            Assert.IsFalse(h.CanLearnMind(Mind(InnerNature.Yin)));
         }
 
         [Test]
-        public void HeroTakesNatureFromTheActiveMind()
+        public void YinRouteLearnsOnlyYin()
         {
-            var yang = ScriptableObject.CreateInstance<MartialArt>();
-            yang.kind = ArtKind.Mind;
-            yang.nature = InnerNature.Yang;
-            var yin = ScriptableObject.CreateInstance<MartialArt>();
-            yin.kind = ArtKind.Mind;
-            yin.nature = InnerNature.Yin;
-            var h = new Character("나", new Stats(), new[] { yang, yin });
-            Assert.AreEqual(InnerNature.Yang, h.ToCombatant().Nature);
-            h.ActiveMind = yin;
-            Assert.AreEqual(InnerNature.Yin, h.ToCombatant().Nature);
-            Assert.AreEqual(InnerNature.Yin, h.InnerDemon().Nature, "심마도 같은 속성이다");
+            var h = Hero(Mind(InnerNature.Yin));
+            Assert.IsTrue(h.CanLearnMind(Mind(InnerNature.Yin)));
+            Assert.IsFalse(h.CanLearnMind(Mind(InnerNature.Yang)));
         }
 
         [Test]
-        public void NatureChangesBattleDamage()
+        public void EitherRouteCanStillLearnNeutralMinds()
         {
-            int Hit(InnerNature attacker, InnerNature target)
-            {
-                var art = Outer();
-                var a = new Combatant("가", true, new Stats { Light = 10 }, new[] { art }) { Nature = attacker };
-                var t = new Combatant("나", false, new Stats { Con = 50 }, new[] { art }) { Nature = target };
-                var b = new Battle(new[] { a }, new[] { t }, new System.Random(1)) { DamageSpread = 0 };
-                b.BeginTurn();
-                int hp = t.Hp;
-                b.UseArt(art, t);
-                return hp - t.Hp;
-            }
-            Assert.Greater(Hit(InnerNature.Yin, InnerNature.Yang), Hit(InnerNature.Yin, InnerNature.Yin));
+            Assert.IsTrue(Hero(Mind(InnerNature.Yin)).CanLearnMind(Mind(InnerNature.None)));
         }
 
         [Test]
-        public void SetupGivesEnemiesTheirNature()
+        public void HarmonyLearnsEverything()
         {
-            Assert.AreEqual(InnerNature.Yin, new UnitSetup { name = "적", nature = InnerNature.Yin, arts = new[] { Outer() }, stats = new Stats() }.Create().Nature);
+            var h = Hero(Mind(InnerNature.Yang), Mind(InnerNature.Harmony));
+            Assert.AreEqual(InnerNature.Harmony, h.Route);
+            Assert.IsTrue(h.CanLearnMind(Mind(InnerNature.Yin)));
+            Assert.IsTrue(h.CanLearnMind(Mind(InnerNature.Yang)));
+        }
+
+        [Test]
+        public void HarmonyArtItselfIsOpenToAnyRoute()
+        {
+            Assert.IsTrue(Hero(Mind(InnerNature.Yin)).CanLearnMind(Mind(InnerNature.Harmony)));
+        }
+
+        [Test]
+        public void OuterArtsAreNotLimited()
+        {
+            var sword = ScriptableObject.CreateInstance<MartialArt>();
+            sword.kind = ArtKind.Outer;
+            sword.nature = InnerNature.Yin;
+            Assert.IsTrue(Hero(Mind(InnerNature.Yang)).CanLearnMind(sword));
+        }
+
+        [Test]
+        public void SectLearningRespectsTheRoute()
+        {
+            var yin = Mind(InnerNature.Yin);
+            yin.displayName = "음공";
+            var sect = ScriptableObject.CreateInstance<SectData>();
+            sect.id = "시험문";
+            sect.alignment = "사파";
+            sect.master = "사부";
+            sect.arts = new[] { new SectArt { art = yin, contribution = 0 } }.ToList();
+            var s = new GameState(Hero(Mind(InnerNature.Yang)), new[] { sect });
+            Assert.IsTrue(s.Join("시험문"), "입문은 된다");
+            Assert.IsFalse(s.Knows("음공"), "그러나 심법은 받지 못한다");
+            Assert.IsFalse(s.CanLearn("음공"));
+            Assert.IsFalse(s.LearnSectArt("음공"));
+        }
+
+        [Test]
+        public void NatureDoesNotChangeBattles()
+        {
+            var yin = Hero(Mind(InnerNature.Yin)).ToCombatant();
+            var yang = Hero(Mind(InnerNature.Yang)).ToCombatant();
+            Assert.AreEqual(yin.MaxHp, yang.MaxHp);
+            Assert.AreEqual(yin.DamageTaken, yang.DamageTaken);
         }
 
         [Test]
         public void DataMatchesTheSetting()
         {
             MartialArt Art(string file) => AssetDatabase.LoadAssetAtPath<MartialArt>($"Assets/_Project/Data/MartialArts/{file}.asset");
-            Assert.AreEqual(InnerNature.Yang, Art("Jeonjinsim").nature);
+            Assert.AreEqual(InnerNature.None, Art("Jeonjinsim").nature, "시작 심법은 길을 정하지 않는다");
             Assert.AreEqual(InnerNature.Yang, Art("Cheongsimgyeol").nature);
             Assert.AreEqual(InnerNature.Yin, Art("Eumsagong").nature);
             Assert.AreEqual(InnerNature.Harmony, Art("ManryuSim").nature);
-            var thugs = AssetDatabase.LoadAssetAtPath<BattleData>("Assets/_Project/Data/Battles/HeuksaThugs.asset");
-            Assert.AreEqual(InnerNature.Yin, thugs.enemies[0].nature);
         }
     }
 }
