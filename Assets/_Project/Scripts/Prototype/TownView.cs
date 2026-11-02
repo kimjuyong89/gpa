@@ -81,7 +81,7 @@ namespace GPA.Prototype
                 Queue(() =>
                 {
                     NewGame(CharacterCreation.Create(name, look, stats, startingArts));
-                    Notice("백로진에 도착했다.");
+                    Talk("시작_기억상실"); // 기억을 잃은 채 객잔에서 깨어난다
                 }), () => Queue(Load)).Root);
         }
 
