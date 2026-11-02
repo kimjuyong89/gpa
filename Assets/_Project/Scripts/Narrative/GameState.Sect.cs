@@ -56,26 +56,34 @@ namespace GPA.Narrative
 
         public bool Knows(string artName) => Hero.Arts.Any(a => a.displayName == artName);
 
+        // 내공의 길이 맞는가. 소속 문파의 무공만 묻는다.
+        public bool CanLearn(string artName)
+        {
+            var sa = CurrentSect?.arts.FirstOrDefault(x => x.art.displayName == artName);
+            return sa != null && Hero.CanLearnMind(sa.art);
+        }
+
         // 소속 문파의 무공을 공헌도를 내고 배운다.
         public bool LearnSectArt(string artName)
         {
             var sa = CurrentSect?.arts.FirstOrDefault(x => x.art.displayName == artName);
-            if (sa == null || Get("공헌." + Sect) < sa.contribution) return false;
+            if (sa == null || Get("공헌." + Sect) < sa.contribution || !Hero.CanLearnMind(sa.art)) return false;
             Learn(sa.art);
             return true;
         }
 
         void Learn(MartialArt art)
         {
-            if (!Hero.Arts.Contains(art)) Hero.Arts.Add(art);
+            if (!Hero.Arts.Contains(art) && Hero.CanLearnMind(art)) Hero.Arts.Add(art);
         }
 
         // 사부의 호감이 충분하면 직전제자가 된다. 문파 무공 상한이 풀리고 비전 초식을 배운다.
         public bool BecomeDisciple()
         {
             var s = CurrentSect;
-            if (s == null || Disciple || Get("호감." + s.master) < s.discipleAffinity) return false;
+            if (s == null || Rank != SectRank.Inner || Get("호감." + s.master) < s.discipleAffinity) return false;
             Disciple = true;
+            Set("신분." + Sect, (int)SectRank.Disciple);
             foreach (var sa in s.arts) Hero.MasteryCaps.Remove(sa.art);
             if (s.secretArt != null) Learn(s.secretArt);
             return true;

@@ -43,6 +43,7 @@ namespace GPA.Prototype
             battleFromTalk = fromTalk;
             fallOnFlee = state.MarkFirstBattle() && state.CanFallIntoMountain;
             heroUnit = state.Hero.ToCombatant(Row.Front);
+            heroUnit.Trait = state.CurrentSect != null ? state.CurrentSect.trait : SectTrait.None;
             var allies = new List<Combatant> { heroUnit };
             if (!data.solo)
                 allies.AddRange(Party.Select(c => c.Create((int)state.Hero.Realm)));
@@ -60,6 +61,8 @@ namespace GPA.Prototype
             StopAllCoroutines();
             var h = state.Hero;
             h.ApplyBattle(heroUnit);
+            string sectName = state.Sect;
+            if (state.BreakRule(heroUnit.UseCounts.Keys)) Notice($"문규를 어긴 것이 드러나 {sectName}에서 쫓겨났다.");
             if (outcome == Outcome.Fled && fallOnFlee)
             {
                 Talk("무명산_추락");
@@ -112,6 +115,7 @@ namespace GPA.Prototype
             CloseMenu();
             var h = state.Hero;
             heroUnit = h.ToCombatant(Row.Front);
+            heroUnit.Trait = state.CurrentSect != null ? state.CurrentSect.trait : SectTrait.None;
             var fight = new Battle(new[] { heroUnit }, new[] { h.InnerDemon(BreakthroughBonus) }) { Tempting = true };
             fight.Events.Add(new BattleEvent { Text = "폐관에 들어 눈을 감자, 내 얼굴을 한 그림자가 앞에 앉아 있다." });
             fight.Events.Add(new BattleEvent { Text = "심마: 그 힘으로 위에 오르겠다고?" });

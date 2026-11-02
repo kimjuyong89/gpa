@@ -25,3 +25,5 @@ MonoBehaviour:
   - art: {fileID: 11400000, guid: d644da6dcb3b23349b8de5a049b8430a, type: 2}
     contribution: 30
   secretArt: {fileID: 11400000, guid: 3bf065379d99af047abf9cf8f8ba2d70, type: 2}
+  trait: 1
+  forbidden: 2

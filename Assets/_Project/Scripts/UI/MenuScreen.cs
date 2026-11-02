@@ -18,6 +18,7 @@ namespace GPA.UI
         readonly GameState state;
         string[] party;
         string picked; // 진형 탭에서 고른 사람
+        MartialArt confirmMind; // 숙련을 잃는 심법 교체는 두 번 눌러야 한다
         readonly bool atTown;
         readonly Action<Training, MartialArt> onTrain;
         readonly Action<MartialArt> onForm;
@@ -88,9 +89,9 @@ namespace GPA.UI
             var info = Ui.Box("col");
             info.style.marginLeft = 16;
             info.Add(Ui.Text($"{h.Name}  ({RealmNames[(int)h.Realm]})", "heading"));
-            string sect = state.Sect == null ? "무소속" : state.Disciple ? $"{state.Sect} 직전제자" : $"{state.Sect} 제자";
+            string sect = state.Sect == null ? "무소속" : $"{state.Sect} {state.RankName}";
             info.Add(Ui.Text($"소속: {sect}"));
-            if (h.ActiveMind != null) info.Add(Ui.Text($"내공: {h.ActiveMind.displayName} ({Combatant.NatureLabel(h.ActiveMind.nature)})"));
+            if (h.ActiveMind != null) info.Add(Ui.Text($"내공: {h.ActiveMind.displayName} ({Combatant.NatureLabel(h.Route)})"));
             info.Add(Ui.Text($"돈 {h.Money}냥   피로 {h.Fatigue}/{h.MaxFatigue}   내공 {h.InnerPower}/{h.InnerPowerToBreak}"));
             if (h.InnerInjured) info.Add(Ui.Text("내상을 입었다. 쉬어야 한다.", "warn"));
             if (party.Length > 0) info.Add(Ui.Text("동료: " + string.Join(", ", party)));
@@ -148,6 +149,14 @@ namespace GPA.UI
                         h.Equip(item);
                         Refresh();
                     }, true, "item-btn"));
+                else if (item.kind == ItemKind.Manual)
+                    row.Add(Ui.Btn(h.CanRead(item) ? "읽기" : h.Arts.Contains(item.manual) ? "익힘" : "못 읽는다", () =>
+                    {
+                        h.Read(item);
+                        Sound.Play("Bonus");
+                        Message = $"{item.manual.displayName}을 익혔다.";
+                        Refresh();
+                    }, h.CanRead(item), "item-btn"));
                 else
                     row.Add(Ui.Btn(h.CanUse(item) ? "사용" : item.kind == ItemKind.Consumable && item.fatigue == 0 ? "전투용" : "못 쓴다", () =>
                     {
@@ -237,10 +246,19 @@ namespace GPA.UI
                 foreach (var art in minds)
                     mindRow.Add(Ui.Btn($"{art.displayName}\n{LineageName(art.lineage)}·{Combatant.NatureLabel(art.nature)} {h.Mastery(art)}성", () =>
                     {
-                        h.ActiveMind = art;
-                        Message = $"이제 {art.displayName}을 운용한다.";
+                        var lost = h.MindsLostBy(art).Select(a => $"{a.displayName} {h.Mastery(a)}성").ToList();
+                        if (lost.Count > 0 && confirmMind != art)
+                        {
+                            confirmMind = art;
+                            string keep = h.KeepsLegacy(art) ? $" {art.displayName}을 수련해 2성에 오르면 {Character.LegacyPercent}%가 이어진다." : "";
+                            Message = $"{string.Join(", ", lost)}의 숙련이 사라진다.{keep} 한 번 더 누르면 바꾼다.";
+                            Refresh();
+                            return;
+                        }
+                        confirmMind = null;
+                        if (h.SwitchMind(art)) Message = $"이제 {art.displayName}을 운용한다.";
                         Refresh();
-                    }, true, art == h.ActiveMind ? "btn-selected" : "btn"));
+                    }, h.CanLearnMind(art), art == h.ActiveMind ? "btn-selected" : "btn"));
                 body.Add(mindRow);
             }
 

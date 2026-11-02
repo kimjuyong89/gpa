@@ -20,13 +20,14 @@ MonoBehaviour:
     sprite: Bear
     ally: 0
     row: 0
+    temper: 1
     lane: 1
     realm: 0
     stats:
-      Outer: 9
+      Outer: 18
       Inner: 0
       Light: 5
-      Con: 9
+      Con: 14
       Wis: 0
       Virtue: 0
       Luck: 0

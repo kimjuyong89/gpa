@@ -13,10 +13,42 @@ MonoBehaviour:
   m_Name: HeuksaBisu
   m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
   displayName: "\uD751\uC0AC\uBE44\uC218"
+  grade: 0
   forms:
   - "사영일섬"
   - "독아연쇄"
   - "역수단혼"
+  moves:
+  - name: "\uC0AC\uC601\uC77C\uC12C"
+    stage: 1
+    innerCost: 6
+    cooldown: 0
+    power: 6
+    hits: 1
+    inflicts: 1
+    inflictChance: 0.35
+    inflictTurns: 3
+    guard: 5
+  - name: "\uB3C5\uC544\uC5F0\uC1C4"
+    stage: 3
+    innerCost: 8
+    cooldown: 0
+    power: 4
+    hits: 2
+    inflicts: 1
+    inflictChance: 0.35
+    inflictTurns: 3
+    guard: 5
+  - name: "\uC5ED\uC218\uB2E8\uD63C"
+    stage: 6
+    innerCost: 12
+    cooldown: 0
+    power: 10
+    hits: 1
+    inflicts: 1
+    inflictChance: 0.5
+    inflictTurns: 3
+    guard: 5
   kind: 0
   skill: 7
   skillNeed: 0
@@ -26,11 +58,11 @@ MonoBehaviour:
   guard: 5
   affinity: 3
   weapon: 2
-  power: 7
+  power: 6
   hits: 1
   reachesBackRow: 1
   inflicts: 1
-  inflictChance: 0.5
+  inflictChance: 0.35
   inflictTurns: 3
   swapsRow: 0
   speedBuff: 0

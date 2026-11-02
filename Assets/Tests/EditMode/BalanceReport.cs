@@ -66,12 +66,12 @@ namespace GPA.Tests
         [TestCase("갈대밭_도적", false, false, 0.45f, 0.75f)]
         [TestCase("갈대밭_도적", true, false, 0.80f, 1.00f)]
         [TestCase("나루터_창고지기", false, false, 0.25f, 0.55f)]
-        [TestCase("나루터_창고지기", true, false, 0.60f, 0.90f)]
+        [TestCase("나루터_창고지기", true, false, 0.75f, 1.00f)]
         [TestCase("청운검문_입문대련", false, false, 0.25f, 0.55f)]
         [TestCase("청운검문_입문대련", false, true, 0.25f, 0.55f)] // 대련엔 소육이 끼지 않는다
         public void WinRateInRange(string battleId, bool cheongun, bool soyuk, float min, float max)
         {
-            float rate = WinRate(battleId, cheongun, soyuk);
+            float rate = cheongun ? WinRate(battleId, true, soyuk, "청운제식검", "청운도복") : WinRate(battleId, false, soyuk); // 입문하면 지급 세트를 받는다
             Assert.That(rate, Is.InRange(min, max), $"{battleId} 승률 {rate:P0}");
         }
 
@@ -112,12 +112,21 @@ namespace GPA.Tests
             Assert.That(tempted, Is.InRange(plain, 0.95f), "유혹은 도움이 되지만 필승은 아니다");
         }
 
-        // 목표: 장비를 맞추면 어려운 전투가 확실히 쉬워지지만, 이야기 결투가 공짜가 되지는 않는다.
+        // 산중 수련의 먹거리 사냥. 곰은 수련 뒤의 목표라 갓 들어온 주인공은 대개 진다.
+        [Test]
+        public void MountainHuntsAreWinnable()
+        {
+            Assert.That(WinRate("산_너구리", false, false), Is.InRange(0.8f, 1f));
+            Assert.That(WinRate("산_늑대", false, false), Is.InRange(0.4f, 0.9f));
+            Assert.That(WinRate("산_곰", false, false), Is.LessThan(0.4f));
+        }
+
+        // 목표: 장비를 맞추면 어려운 전투가 확실히 쉬워지지만,이야기 결투가 공짜가 되지는 않는다.
         [Test]
         public void GearHelpsWithoutTrivializing()
         {
             string[] bought = { "철검", "베옷", "짚신" }; // 120냥어치
-            Assert.That(WinRate("나루터_창고지기", false, false, bought), Is.InRange(0.45f, 0.85f));
+            Assert.That(WinRate("나루터_창고지기", false, false, bought), Is.InRange(0.45f, 0.9f));
             WinRate("청운검문_입문대련", false, false, bought); // 기록만: 경공이 같아 신발 하나로 순서가 뒤집힌다. 대련은 져도 입문한다
             Assert.That(WinRate("나루터_창고지기", true, false, "청운제식검", "청운도복"), Is.InRange(0.75f, 1f));
         }

@@ -3,6 +3,7 @@ INCLUDE Baekrojin_Sects.ink
 INCLUDE Baekrojin_Ledger.ink
 INCLUDE Baekrojin_Companions.ink
 INCLUDE Baekrojin_Mountain.ink
+INCLUDE Baekrojin_SectLife.ink
 
 // 백로진(白鷺鎭) — M1 시작 마을. 샘플 대본.
 

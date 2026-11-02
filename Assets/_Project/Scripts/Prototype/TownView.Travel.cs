@@ -153,7 +153,7 @@ namespace GPA.Prototype
 
         internal void OpenShop(string id)
         {
-            shop = new ShopScreen(state.Hero, id, () => Queue(() =>
+            shop = new ShopScreen(state.Hero, id, state.SectDb.ContainsKey(id) ? state : null, () => Queue(() =>
             {
                 shop.Root.RemoveFromHierarchy();
                 shop = null;

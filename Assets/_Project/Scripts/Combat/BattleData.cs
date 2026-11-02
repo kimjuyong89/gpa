@@ -14,13 +14,13 @@ namespace GPA.Combat
         public bool ally;
         public Row row;
         public int lane = 1;                // 가로 칸 0~2. 겹치면 전투가 옆 칸으로 옮긴다
+        public Temper temper;
         public int realm;
-        public InnerNature nature;
         public Stats stats;
         public MartialArt[] arts;
 
         public Combatant Create(int? realmOverride = null) =>
-            new(name, ally, stats, arts, row, realm: realmOverride ?? realm) { Sprite = sprite, Lane = lane, Nature = nature };
+            new(name, ally, stats, arts, row, realm: realmOverride ?? realm) { Sprite = sprite, Lane = lane, Temper = temper };
     }
 
     [Serializable]

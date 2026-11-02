@@ -83,6 +83,8 @@ namespace GPA.Tests
             state.Hero.PassForm(sword);
             Assert.AreEqual(GameState.NormalMasteryCap, state.Hero.Mastery(sword));
 
+            state.Add("공헌.청운검문", GameState.InnerContribution);
+            state.Promote(); // 내문제자
             Assert.IsFalse(state.BecomeDisciple(), "호감 부족");
             state.Set("호감.윤백산", 10);
             Assert.IsTrue(state.BecomeDisciple());

@@ -192,7 +192,9 @@ namespace GPA.UI
             var h = state.Hero;
             float quality = Sim.Quality;
             bool done = Sim.Result == CirculationEnd.Complete;
+            bool waiting = h.LegacyPending;
             int gain = h.ApplyCirculation(Sim, site);
+            string legacy = waiting && !h.LegacyPending ? $"\n앞선 심법의 공부 {Character.LegacyPercent}%가 이어졌다." : "";
             if (done) state.Set(AutoKey, 1);
             Sound.Play(done ? "Bonus" : "Impact");
 
@@ -204,7 +206,7 @@ namespace GPA.UI
             };
             string text = Sim.Result switch
             {
-                CirculationEnd.Complete => $"내공 +{gain}   조식 {quality:P0}",
+                CirculationEnd.Complete => $"내공 +{gain}   조식 {quality:P0}{legacy}",
                 CirculationEnd.Overheated => "기혈이 뒤틀려 내상을 입었다.",
                 _ => "피로만 쌓였다.",
             };

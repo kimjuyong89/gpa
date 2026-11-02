@@ -20,6 +20,7 @@ MonoBehaviour:
     sprite: Wolf
     ally: 0
     row: 0
+    temper: 1
     lane: 0
     realm: 0
     stats:
@@ -36,6 +37,7 @@ MonoBehaviour:
     sprite: Wolf
     ally: 0
     row: 0
+    temper: 3
     lane: 2
     realm: 0
     stats:

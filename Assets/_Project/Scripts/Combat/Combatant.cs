@@ -34,6 +34,17 @@ namespace GPA.Combat
 
     public enum MindFit { Common, Match, Weak, Clash } // 공용, 일치, 약화(기본 심법으로 문파 무공), 역행(정사 충돌)
 
+    public enum Temper { Plain, Aggressive, Guarded, Assassin } // 적 성향: 무난, 공격형, 수비형, 암살형
+
+    // 다음 행동 예고. Art가 없으면 운기조식이다.
+    public class Intent
+    {
+        public MartialArt Art;
+        public Move Move;
+        public Combatant Target;
+        public bool Burst;
+    }
+
     public class Status
     {
         public StatusKind Kind;
@@ -47,7 +58,9 @@ namespace GPA.Combat
         public string Sprite = "NinjaDark"; // 캐릭터 시트 폴더 이름
         public string Figure;               // 입상·초상화 이름. 없으면 Name을 쓴다
         public IReadOnlyList<ItemData> Gear = Array.Empty<ItemData>(); // 스탯 보너스는 Stats에 이미 들어 있다
-        public InnerNature Nature;          // 내공 속성
+        public Temper Temper;               // 적 성향
+        public SectTrait Trait;             // 소속 문파의 전투 규칙
+        public Intent Intent;               // 적의 다음 행동. 화면에 예고한다
         public MartialArt Mind;             // 운용 심법. 주인공만 있고, 없으면 계열을 따지지 않는다
         public IReadOnlyDictionary<SkillKind, int> Skills; // 기예. 주인공과 심마만 있고, 없으면 기예를 따지지 않는다
         public readonly Dictionary<SkillKind, int> SkillUses = new(); // 전투 후 기예 정산용
@@ -64,7 +77,7 @@ namespace GPA.Combat
         public int SpeedBuff, EvasionBuff, BuffTurns;
         public int ArtGuard, MoveGuard; // 외공의 방어(다음 자기 턴까지), 경공의 방어(지속 턴 동안)
         public bool Counter;
-        readonly Dictionary<MartialArt, int> cooldowns = new();
+        readonly Dictionary<Move, int> cooldowns = new();
 
         public readonly int Realm; // 경지 단계 (0 = 삼류)
         readonly IReadOnlyDictionary<MartialArt, int> mastery;
@@ -91,7 +104,8 @@ namespace GPA.Combat
 
         // 숙련도 효과: 3성 내력 소모 20% 감소, 6성 상태이상 확률 +20%p, 성마다 위력 +2%, 10성(대성) 위력 +20%
         public int MasteryOf(MartialArt art) => mastery != null && mastery.TryGetValue(art, out var m) ? m : 1;
-        public int CostOf(MartialArt art) => MasteryOf(art) >= 3 ? art.innerCost * 8 / 10 : art.innerCost;
+        public int CostOf(MartialArt art) => CostOf(art, art.Moves[0]);
+        public int CostOf(MartialArt art, Move m) => MasteryOf(art) >= 3 ? m.innerCost * 8 / 10 : m.innerCost;
         public float PowerMultiplier(MartialArt art) => 1 + 0.02f * (MasteryOf(art) - 1) + (MasteryOf(art) >= 10 ? 0.2f : 0);
         public float InflictBonus(MartialArt art) => MasteryOf(art) >= 6 ? 0.2f : 0;
         internal void RecordUse(MartialArt art) => UseCounts[art] = UseCounts.TryGetValue(art, out var n) ? n + 1 : 1;
@@ -101,7 +115,7 @@ namespace GPA.Combat
         public const float WeaponMatch = 1.1f;
         const int MaxDefense = 60;
         public float GearMultiplier(MartialArt art) =>
-            (1 + Gear.Sum(i => i.attack) / 100f) * (Gear.Any(i => i.weapon != WeaponType.None && i.weapon == art.weapon) ? WeaponMatch : 1);
+            1 + Gear.Sum(i => i.attack) / 100f + (Gear.Any(i => i.weapon != WeaponType.None && i.weapon == art.weapon) ? WeaponMatch - 1 : 0);
         // 운용 심법과 무공의 궁합. 수치는 임시값 (docs/04_무공.md).
         public const float MatchPower = 1.1f, WeakPower = 0.8f, ClashPower = 0.7f;
 
@@ -150,31 +164,15 @@ namespace GPA.Combat
             _ => "",
         };
 
-        // 내공 속성: 음과 양이 맞붙으면 서로 더 아프다. 조화는 음이나 양에게 더 주고, 상극을 받지 않는다.
-        // 양은 강(剛), 음은 유(柔) 무공에 힘이 실린다. 조화는 둘 다. 공용 기본기에는 실리지 않는다.
-        public const float NatureClash = 1.15f, NatureArt = 1.1f;
-
-        public float NatureMultiplier(Combatant t) => (Nature, t.Nature) switch
-        {
-            (InnerNature.Yin, InnerNature.Yang) or (InnerNature.Yang, InnerNature.Yin) => NatureClash,
-            (InnerNature.Harmony, InnerNature.Yin or InnerNature.Yang) => NatureClash,
-            _ => 1,
-        };
-
-        public float NatureArtBonus(MartialArt art) => art.lineage == Lineage.Common ? 1 : (Nature, art.affinity) switch
-        {
-            (InnerNature.Yang or InnerNature.Harmony, Affinity.Gang) => NatureArt,
-            (InnerNature.Yin or InnerNature.Harmony, Affinity.Yu) => NatureArt,
-            _ => 1,
-        };
-
         public static string NatureLabel(InnerNature n) => n switch
         {
             InnerNature.Yin => "음",
             InnerNature.Yang => "양",
             InnerNature.Harmony => "음양조화",
-            _ => "",
+            _ => "미정",
         };
+
+        bool pressureGuard;
 
         public int Guard => ArtGuard + MoveGuard;
         public float DamageTaken => 1 - Math.Min(MaxDefense, Gear.Sum(i => i.defense) + Guard) / 100f;
@@ -186,9 +184,41 @@ namespace GPA.Combat
 
         public bool Has(StatusKind k) => Statuses.Any(s => s.Kind == k);
         public bool Resists(StatusKind k) => Passives.Any(a => a.resists.Contains(k)) || Gear.Any(i => i.resists.Contains(k));
-        public int Cooldown(MartialArt art) => cooldowns.TryGetValue(art, out var t) ? t : 0;
+        public int Cooldown(MartialArt art) => Cooldown(art.Moves[0]);
+        public int Cooldown(Move m) => cooldowns.TryGetValue(m, out var t) ? t : 0;
         // 자기 턴 시작마다 1씩 줄어서 0이 되면 쓸 수 있다. +1은 사용한 턴 다음부터 세기 위해서.
-        internal void StartCooldown(MartialArt art) => cooldowns[art] = art.cooldown + 1;
+        internal void StartCooldown(Move m) => cooldowns[m] = m.cooldown + 1;
+
+        // 기세: 때리고 맞으면 찬다. 50을 쓰면 다음 초식이 절초가 되어 위력 보너스 +75%다.
+        public const int MaxMomentum = 100, MomentumOnHit = 8, MomentumOnHurt = 3, BurstCost = 50;
+        public int Momentum;
+        public bool Burst;
+        public void GainMomentum(int amount) => Momentum = Math.Min(MaxMomentum, Momentum + amount);
+
+        // 연계: 한 무공의 초식을 순서대로 이어 쓰면 뒤 초식이 강해진다. 검은 단계마다 더 오른다.
+        const float ComboStep = 0.1f, SwordComboStep = 0.25f;
+        MartialArt comboArt;
+        int comboIndex = -1, comboCount;
+
+        public bool ComboNext(MartialArt art, Move m) => comboArt == art && System.Array.IndexOf(art.Moves, m) == comboIndex + 1;
+        public float ComboMultiplier(MartialArt art) => 1 + comboCount * (art.skill == SkillKind.Sword ? SwordComboStep : ComboStep);
+
+        internal void AdvanceCombo(MartialArt art, Move m)
+        {
+            comboCount = ComboNext(art, m) ? comboCount + 1 : 0;
+            comboArt = art;
+            comboIndex = System.Array.IndexOf(art.Moves, m);
+        }
+
+        internal void BreakCombo()
+        {
+            comboArt = null;
+            comboIndex = -1;
+            comboCount = 0;
+        }
+
+        // 등급: 절세가 아니면 그 경지에 올라야 쓴다. 절세는 기연으로만 얻으니 묻지 않는다. 적은 따지지 않는다.
+        public bool MeetsGrade(MartialArt art) => Skills == null || art.grade == ArtGrade.Supreme || Realm >= (int)art.grade;
 
         public void TakeDamage(int dmg) => Hp = Math.Max(0, Hp - dmg);
 
@@ -196,6 +226,7 @@ namespace GPA.Combat
         internal bool StartTurn(List<BattleEvent> events)
         {
             bool pressured = Has(StatusKind.Pressure);
+            pressureGuard = pressured; // 점혈이 풀린 바로 다음 턴까지는 다시 걸리지 않는다. 무한 경직을 막는다
             ArtGuard = 0;
             foreach (var s in Statuses.ToList())
             {
@@ -219,13 +250,14 @@ namespace GPA.Combat
                 Counter = false;
             }
 
+            if (pressured) BreakCombo();
             if (pressured) events.Add(new BattleEvent { Source = this, Text = $"{Name}: 점혈되어 움직이지 못한다" });
             return pressured;
         }
 
         internal void Inflict(StatusKind k, int turns, float chance, Random rng, List<BattleEvent> events)
         {
-            if (k == StatusKind.None) return;
+            if (k == StatusKind.None || (k == StatusKind.Pressure && pressureGuard)) return;
             if (Resists(k)) chance /= 2;
             if (k == StatusKind.Poison) chance *= PoisonGuard;
             if (rng.NextDouble() >= chance) return;
@@ -278,6 +310,10 @@ namespace GPA.Combat
             if (Has(StatusKind.QiDeviation)) InnerInjured = true;
             Statuses.Clear();
             cooldowns.Clear();
+            BreakCombo();
+            Momentum = 0;
+            Burst = false;
+            Intent = null;
             SpeedBuff = EvasionBuff = BuffTurns = ArtGuard = MoveGuard = 0;
             Counter = false;
             Inner = Math.Min(Inner, MaxInner);

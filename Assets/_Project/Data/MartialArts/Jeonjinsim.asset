@@ -35,9 +35,10 @@ MonoBehaviour:
   evasionBuff: 0
   buffTurns: 0
   counter: 0
-  nature: 2
-  maxInnerBonus: 10
-  meditateBonus: 20
+  nature: 3
+  keepsMastery: 1
+  maxInnerBonus: 0
+  meditateBonus: 10
   resists: 
   onHit: 0
   onHitChance: 0

@@ -30,6 +30,7 @@ MonoBehaviour:
   buffTurns: 0
   counter: 0
   nature: 3
+  keepsMastery: 1
   maxInnerBonus: 80
   meditateBonus: 50
   resists: 0100000002000000030000000400000005000000

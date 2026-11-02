@@ -20,14 +20,14 @@ MonoBehaviour:
     sprite: NinjaDark
     ally: 0
     row: 0
+    temper: 1
     lane: 0
     realm: 0
-    nature: 1
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -37,14 +37,14 @@ MonoBehaviour:
     sprite: NinjaDark
     ally: 0
     row: 0
+    temper: 1
     lane: 1
     realm: 0
-    nature: 1
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -54,14 +54,14 @@ MonoBehaviour:
     sprite: NinjaDark
     ally: 0
     row: 0
+    temper: 1
     lane: 2
     realm: 0
-    nature: 1
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -71,14 +71,14 @@ MonoBehaviour:
     sprite: NinjaDark
     ally: 0
     row: 1
+    temper: 3
     lane: 0
     realm: 0
-    nature: 1
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -89,14 +89,14 @@ MonoBehaviour:
     sprite: NinjaDark
     ally: 0
     row: 1
+    temper: 3
     lane: 1
     realm: 0
-    nature: 1
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -107,14 +107,14 @@ MonoBehaviour:
     sprite: NinjaDark
     ally: 0
     row: 1
+    temper: 3
     lane: 2
     realm: 0
-    nature: 1
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0

@@ -18,7 +18,7 @@ MonoBehaviour:
   cooldown: 0
   guard: 0
   affinity: 0
-  power: 7
+  power: 4
   hits: 1
   reachesBackRow: 0
   inflicts: 0

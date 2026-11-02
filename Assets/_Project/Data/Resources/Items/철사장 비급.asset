@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dc80dc7712732749bc9cae8a25d220f, type: 3}
+  m_Name: "\uCCA0\uC0AC\uC7A5 \uBE44\uAE09"
+  m_EditorClassIdentifier: GPA::GPA.Combat.ItemData
+  kind: 7
+  price: 100
+  shop: "\uBC31\uB85C\uC9C4"
+  weapon: 0
+  attack: 0
+  defense: 0
+  stats:
+    Outer: 0
+    Inner: 0
+    Light: 0
+    Con: 0
+    Wis: 0
+    Virtue: 0
+    Luck: 0
+  resists: 
+  heal: 0
+  restoreInner: 0
+  cures: 
+  fatigue: 0
+  innerPower: 0
+  manual: {fileID: 11400000, guid: 8a3e28de9e6641428613d0655aa3ecdb, type: 2}

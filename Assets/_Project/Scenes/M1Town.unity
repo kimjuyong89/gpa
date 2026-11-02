@@ -162,6 +162,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2b4fefe71b0425984ae7279913f4bda, type: 2}
   - {fileID: 11400000, guid: f2dbf95600764985bc96a019d2aac7be, type: 2}
   - {fileID: 11400000, guid: 0579c9efbfd641bfb13f73c70a039f07, type: 2}
+  - {fileID: 11400000, guid: 1e982794b75a476fba58077323b6acab, type: 2}
   companions:
   - name: "\uC18C\uC721"
     sprite: Child

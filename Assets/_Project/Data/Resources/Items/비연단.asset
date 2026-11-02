@@ -14,7 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: GPA::GPA.Combat.ItemData
   kind: 6
   price: 200
-  shop: 
+  contribution: 100
+  shop: "\uD751\uC0AC\uBC29"
   weapon: 0
   attack: 0
   defense: 0

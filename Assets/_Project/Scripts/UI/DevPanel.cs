@@ -182,8 +182,9 @@ namespace GPA.UI
                 Set($"{s.id} 직전제자", () =>
                 {
                     if (state.Sect != s.id) state.Join(s.id);
+                    state.Add("공헌." + s.id, GameState.InnerContribution);
                     state.Set("호감." + s.master, s.discipleAffinity);
-                    state.BecomeDisciple();
+                    while (state.Rank < SectRank.Disciple && state.Promote()) { }
                 });
             }
             foreach (var art in town.AllArts.Where(Character.IsMental))
@@ -192,6 +193,10 @@ namespace GPA.UI
                     if (!Hero.Arts.Contains(art)) Hero.Arts.Add(art);
                     Hero.ActiveMind = art;
                 });
+            Set("공헌 +100", () =>
+            {
+                if (state.Sect != null) state.Add("공헌." + state.Sect, 100);
+            });
             Set("기예 전부 +20", () =>
             {
                 foreach (SkillKind k in Enum.GetValues(typeof(SkillKind)))

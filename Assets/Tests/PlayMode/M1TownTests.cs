@@ -478,6 +478,34 @@ namespace GPA.Tests
             Assert.AreEqual(TownView.Mode.Region, town.mode);
         }
 
+        // 숙련을 잃는 교체는 한 번 더 눌러야 일어난다.
+        [UnityTest, Timeout(60000)]
+        public IEnumerator SwitchingAwayAsksBeforeWipingMastery()
+        {
+            var h = town.state.Hero;
+            var basic = h.ActiveMind;
+            var pure = System.Linq.Enumerable.First(town.AllArts, a => a.displayName == "청심결");
+            h.Arts.Add(pure);
+            h.ActiveMind = pure;
+            h.GainMastery(pure, 200);
+            int mastery = h.Mastery(pure);
+            Assert.Greater(mastery, 1);
+
+            town.OpenMenu();
+            Press(town.UiRoot.Query<Button>().Where(b => b.text == "수련").First());
+            yield return null;
+            Press(town.UiRoot.Query<Button>().Where(b => b.text.StartsWith("전진심법")).First());
+            yield return null;
+            Assert.AreSame(pure, h.ActiveMind, "첫 클릭은 묻기만 한다");
+            Assert.AreEqual(mastery, h.Mastery(pure));
+
+            Press(town.UiRoot.Query<Button>().Where(b => b.text.StartsWith("전진심법")).First());
+            yield return null;
+            Assert.AreSame(basic, h.ActiveMind);
+            Assert.AreEqual(1, h.Mastery(pure));
+            town.CloseMenuForTest();
+        }
+
         // 수련 탭에서 운용 심법을 바꾸면 전투에 그 심법으로 들어간다.
         [UnityTest, Timeout(60000)]
         public IEnumerator TrainingTabSwitchesTheActiveMind()
@@ -493,6 +521,103 @@ namespace GPA.Tests
             Assert.AreSame(pure, h.ActiveMind);
             Assert.AreSame(pure, h.ToCombatant().Mind);
             town.CloseMenuForTest();
+        }
+
+        // 소지품에서 비급을 읽으면 무공이 늘고, 전투에서 쓸 수 있다.
+        [UnityTest, Timeout(60000)]
+        public IEnumerator ReadingAManualFromTheBagTeachesTheArt()
+        {
+            var h = town.state.Hero;
+            var book = ItemData.Find("맹호권 비급");
+            h.Bag.Add(book);
+            town.OpenMenu();
+            Press(town.UiRoot.Query<Button>().Where(b => b.text == "소지품").First());
+            yield return null;
+            Press(town.UiRoot.Query<Button>(className: "item-btn").Where(b => b.text == "읽기").First());
+            yield return null;
+            Assert.IsTrue(h.Arts.Contains(book.manual));
+            Assert.AreEqual(Character.ReadFatigue, h.Fatigue);
+            town.CloseMenuForTest();
+        }
+
+        IEnumerator Pick(int index)
+        {
+            for (int i = 0; i < 90; i++)
+            {
+                town.TalkBox?.Advance();
+                yield return null;
+            }
+            town.TalkBox.Choose(index);
+            yield return null;
+        }
+
+        IEnumerator AdvanceToEnd()
+        {
+            for (int i = 0; i < 300 && town.mode == TownView.Mode.Talk; i++)
+            {
+                town.TalkBox?.Advance();
+                yield return null;
+            }
+        }
+
+        // 문파 메뉴: 잡일, 호송 임무, 승급, 비고까지 대사로 돌아간다.
+        [UnityTest, Timeout(60000)]
+        public IEnumerator SectLifeRunsThroughDialogue()
+        {
+            var s = town.state;
+            s.Join("청운검문");
+
+            town.Talk("청운검문_입문");
+            yield return Pick(0); // 잡일
+            yield return AdvanceToEnd();
+            Assert.AreEqual(10, s.Contribution);
+            Assert.AreEqual(20, s.Hero.Fatigue);
+
+            town.Talk("청운검문_입문");
+            yield return Pick(1); // 임무
+            yield return Pick(1); // 호송
+            yield return AdvanceToEnd();
+            Assert.AreEqual(22, s.Contribution);
+            Assert.AreEqual(50, s.Hero.Fatigue);
+
+            s.Add("공헌.청운검문", 100);
+            s.Hero.Fatigue = 0;
+            town.Talk("청운검문_입문");
+            yield return Pick(3); // 승급
+            yield return AdvanceToEnd();
+            Assert.AreEqual(GPA.Narrative.SectRank.Inner, s.Rank);
+
+            town.Talk("청운검문_입문");
+            yield return Pick(3); // 비고
+            for (int i = 0; i < 120 && town.UiRoot.Q(className: "shop-side") == null; i++)
+            {
+                town.TalkBox?.Advance();
+                yield return null;
+            }
+            var vault = town.UiRoot.Q(className: "shop-side");
+            Assert.IsNotNull(vault, "비고가 열린다");
+            int before = s.Contribution;
+            Press(vault.Query<Button>(className: "item-btn").First());
+            yield return null;
+            Assert.Less(s.Contribution, before);
+            Press(town.UiRoot.Query<Button>().Where(b => b.text == "닫기").First());
+            yield return null;
+            yield return AdvanceToEnd();
+            Assert.AreEqual(TownView.Mode.Region, town.mode);
+        }
+
+        // 금지된 계열의 무공을 쓰고 전투를 끝내면 발각이 쌓인다.
+        [UnityTest, Timeout(60000)]
+        public IEnumerator SectRuleCountsAtTheEndOfBattle()
+        {
+            var s = town.state;
+            s.Join("청운검문");
+            var heuksa = System.Linq.Enumerable.First(town.AllArts, a => a.displayName == "흑사비수");
+            town.StartBattle("갈대밭_도적", false);
+            town.HeroUnitForTest.UseCounts[heuksa] = 1;
+            town.EndBattle(Outcome.Victory);
+            yield return null;
+            Assert.AreEqual(GPA.Narrative.GameState.RuleBreach, s.Get("발각.청운검문"));
         }
 
         // 경험치가 찬 무공은 수련 탭에 연마가 뜨고, 초식을 다 치면 6성에 오른다.

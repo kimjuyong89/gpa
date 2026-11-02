@@ -69,6 +69,7 @@ namespace GPA.UI
             ItemKind.Boots => "履",
             ItemKind.Trinket => "珮",
             ItemKind.Elixir => "丹",
+            ItemKind.Manual => "書",
             _ => "物",
         };
 

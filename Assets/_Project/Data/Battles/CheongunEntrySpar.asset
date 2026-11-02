@@ -20,8 +20,8 @@ MonoBehaviour:
     sprite: NinjaBlue
     ally: 0
     row: 0
+    temper: 1
     realm: 0
-    nature: 2
     stats:
       Str: 10
       Agi: 8

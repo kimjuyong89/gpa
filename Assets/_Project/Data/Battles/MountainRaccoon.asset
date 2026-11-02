@@ -20,6 +20,7 @@ MonoBehaviour:
     sprite: Raccoon
     ally: 0
     row: 0
+    temper: 3
     lane: 1
     realm: 0
     stats:

@@ -13,11 +13,42 @@ MonoBehaviour:
   m_Name: CheongunNagilgeom
   m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
   displayName: "\uCCAD\uC6B4\uB099\uC77C\uAC80"
+  grade: 1
   forms:
   - "운개일출"
   - "낙일관홍"
   - "장홍귀일"
-  - "일검단운"
+  moves:
+  - name: "\uC6B4\uAC1C\uC77C\uCD9C"
+    stage: 1
+    innerCost: 20
+    cooldown: 3
+    power: 22
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
+  - name: "\uB099\uC77C\uAD00\uD64D"
+    stage: 3
+    innerCost: 24
+    cooldown: 3
+    power: 26
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
+  - name: "\uC7A5\uD64D\uADC0\uC77C"
+    stage: 6
+    innerCost: 28
+    cooldown: 3
+    power: 32
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
   kind: 0
   skill: 1
   skillNeed: 10
@@ -27,7 +58,7 @@ MonoBehaviour:
   guard: 5
   affinity: 1
   weapon: 1
-  power: 25
+  power: 22
   hits: 1
   reachesBackRow: 0
   inflicts: 0

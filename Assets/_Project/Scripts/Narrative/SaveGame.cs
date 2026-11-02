@@ -38,6 +38,8 @@ namespace GPA.Narrative
             public List<Entry> mastery, caps, values, bag;
             public List<Entry> forged = new();
             public string activeMind = "";
+            public string legacyMind = "";
+            public int legacyExp;
             public List<Entry> skills = new(), skillProgress = new();
             public List<string> equipped; // 칸마다 하나. 빈 칸은 ""
             public List<QuestData> quests;
@@ -74,6 +76,8 @@ namespace GPA.Narrative
                 caps = Entries(h.MasteryCaps, a => a.name),
                 forged = Entries(h.Forged, a => a.name),
                 activeMind = h.ActiveMind != null ? h.ActiveMind.name : "",
+                legacyMind = h.legacyMind != null ? h.legacyMind.name : "",
+                legacyExp = h.legacyExp,
                 skills = Entries(h.SkillLevels, k => k.ToString()),
                 skillProgress = Entries(h.SkillProgress, k => k.ToString()),
                 values = Entries(s.Values, k => k),
@@ -114,6 +118,8 @@ namespace GPA.Narrative
             Fill(h.MasteryCaps, data.caps, artByName);
             Fill(h.Forged, data.forged, artByName);
             h.ActiveMind = data.activeMind == "" ? null : artByName(data.activeMind);
+            h.legacyMind = data.legacyMind == "" ? null : artByName(data.legacyMind);
+            h.legacyExp = data.legacyExp;
             foreach (var e in data.skills) h.SkillLevels[Enum.Parse<SkillKind>(e.key)] = e.value;
             foreach (var e in data.skillProgress) h.SkillProgress[Enum.Parse<SkillKind>(e.key)] = e.value;
             h.Bag.counts.Clear();

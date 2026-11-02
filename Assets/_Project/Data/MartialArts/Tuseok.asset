@@ -13,10 +13,42 @@ MonoBehaviour:
   m_Name: Tuseok
   m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
   displayName: "\uD22C\uC11D"
+  grade: 0
   forms:
   - "일석"
   - "연투"
   - "유성탄"
+  moves:
+  - name: "\uC77C\uC11D"
+    stage: 1
+    innerCost: 0
+    cooldown: 0
+    power: 4
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 0
+  - name: "\uC5F0\uD22C"
+    stage: 3
+    innerCost: 2
+    cooldown: 0
+    power: 3
+    hits: 2
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 0
+  - name: "\uC720\uC131\uD0C4"
+    stage: 6
+    innerCost: 5
+    cooldown: 0
+    power: 8
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 0
   kind: 0
   skill: 7
   skillNeed: 0

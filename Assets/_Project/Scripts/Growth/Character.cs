@@ -28,6 +28,8 @@ namespace GPA.Growth
         public readonly Inventory Bag = new();
         internal readonly Dictionary<SkillKind, int> SkillLevels = new(), SkillProgress = new(); // 세이브용으로 internal
         MartialArt activeMind;
+        internal MartialArt legacyMind; // 같은 속성으로 바꾼 뒤 이어받기를 기다리는 심법
+        internal int legacyExp;
         public readonly ItemData[] Equipped = new ItemData[SlotCount];
         internal readonly Dictionary<MartialArt, int> masteryExp = new(); // 세이브용으로 internal
         internal readonly int[] statProgress = new int[5];
@@ -47,6 +49,40 @@ namespace GPA.Growth
             get => activeMind != null && Arts.Contains(activeMind) ? activeMind : Arts.FirstOrDefault(IsMental);
             set => activeMind = value;
         }
+
+        // art로 바꾸면 숙련을 잃는 심법들.
+        public IEnumerable<MartialArt> MindsLostBy(MartialArt art) =>
+            Arts.Where(a => IsMental(a) && a != art && !a.keepsMastery && ExpOf(a) > 0);
+
+        public const int LegacyPercent = 80, LegacyStage = 2;
+        public bool LegacyPending => legacyMind != null;
+
+        // 음에서 음, 양에서 양으로 바꾸는가.
+        public bool KeepsLegacy(MartialArt art) =>
+            ActiveMind != null && art.nature is InnerNature.Yin or InnerNature.Yang && ActiveMind.nature == art.nature;
+
+        // 심법을 바꾸면 다른 심법의 숙련은 모두 처음으로 돌아간다. 전진심법 계열만 남는다.
+        // 같은 속성끼리는 쓰던 심법 경험치의 80%를 맡아 두었다가, 새 심법을 수련해 2성에 오를 때 넘겨준다.
+        public bool SwitchMind(MartialArt art)
+        {
+            if (art == ActiveMind || !CanLearnMind(art)) return false;
+            legacyExp = KeepsLegacy(art) ? ExpOf(ActiveMind) * LegacyPercent / 100 : 0;
+            legacyMind = legacyExp > 0 ? art : null;
+            foreach (var lost in MindsLostBy(art).ToList())
+            {
+                masteryExp.Remove(lost);
+                Forged.Remove(lost);
+            }
+            ActiveMind = art;
+            return true;
+        }
+
+        // 내공의 길은 운용 심법의 음양이다.
+        public InnerNature Route => ActiveMind != null ? ActiveMind.nature : InnerNature.Harmony;
+
+        // 양을 운용하면 양만, 음을 운용하면 음만 배우고 바꿀 수 있다. 음양조화는 모두 열리고, 어느 길에서든 조화로는 돌아올 수 있다.
+        public bool CanLearnMind(MartialArt art) =>
+            !IsMental(art) || art.nature == InnerNature.Harmony || Route == InnerNature.Harmony || Route == art.nature;
 
         IEnumerable<MartialArt> BattleArts => Arts.Where(a => !IsMental(a) || a == ActiveMind);
 
@@ -118,8 +154,14 @@ namespace GPA.Growth
             if (p.Passed) PassForm(p.Art);
         }
 
-        public void GainMastery(MartialArt art, int exp) =>
-            masteryExp[art] = (masteryExp.TryGetValue(art, out var e) ? e : 0) + exp * (100 + Stats.Wis * 5) / 100;
+        public void GainMastery(MartialArt art, int exp)
+        {
+            masteryExp[art] = ExpOf(art) + exp * (100 + Stats.Wis * 5) / 100;
+            if (art != legacyMind || Mastery(art) < LegacyStage) return;
+            masteryExp[art] += legacyExp; // 수련으로 첫 단계를 넘으면 앞선 심법의 공부가 이어진다
+            legacyMind = null;
+            legacyExp = 0;
+        }
 
         public int Skill(SkillKind k) => SkillLevels.TryGetValue(k, out var v) ? v : 0;
 
@@ -248,7 +290,7 @@ namespace GPA.Growth
             s.Light = geared.Light; // 경공은 그대로: 1만 달라도 행동 순서가 뒤집혀 승패가 갈린다
             return new Combatant("심마", false, s, BattleArts, Row.Front, false, (int)Realm, Arts.ToDictionary(a => a, Mastery))
             {
-                Sprite = CharacterCreation.Looks[Appearance], Figure = $"심마{Appearance + 1}", Gear = Worn.ToList(), Mind = ActiveMind, Nature = ActiveMind != null ? ActiveMind.nature : InnerNature.None, Skills = new Dictionary<SkillKind, int>(SkillLevels),
+                Sprite = CharacterCreation.Looks[Appearance], Figure = $"심마{Appearance + 1}", Gear = Worn.ToList(), Mind = ActiveMind, Skills = new Dictionary<SkillKind, int>(SkillLevels),
             };
         }
 
@@ -320,6 +362,24 @@ namespace GPA.Growth
             return true;
         }
 
+        // 비급: 읽으면 무공을 익힌다. 피로가 들고, 등급이 높으면 오성이 있어야 뜻을 안다. 심법은 내공의 길을 따른다.
+        public const int ReadFatigue = 30;
+        static readonly int[] ManualWisdom = { 0, 8, 14, 20, 26 };
+        public static int WisdomFor(MartialArt art) => ManualWisdom[(int)art.grade];
+
+        public bool CanRead(ItemData book) =>
+            book.kind == ItemKind.Manual && Bag.Count(book) > 0 && !Arts.Contains(book.manual) && CanLearnMind(book.manual)
+            && GearedStats.Wis >= WisdomFor(book.manual) && Fatigue + ReadFatigue <= MaxFatigue;
+
+        public bool Read(ItemData book)
+        {
+            if (!CanRead(book)) return false;
+            Bag.Remove(book);
+            Fatigue += ReadFatigue;
+            Arts.Add(book.manual);
+            return true;
+        }
+
         static bool RaisesStats(ItemData item) => item.kind == ItemKind.Elixir && CharacterCreation.All.Any(k => item.stats.Ref(k) != 0);
 
         // 전투 밖에서 약 먹기: 피로, 내공, 내상, 영약의 스탯·돌파에 듣는 것만.
@@ -345,7 +405,7 @@ namespace GPA.Growth
         public Combatant ToCombatant(Row row = Row.Front) =>
             new(Name, true, GearedStats, BattleArts, row, InnerInjured, (int)Realm, Arts.ToDictionary(a => a, Mastery))
             {
-                Sprite = CharacterCreation.Looks[Appearance], Figure = $"주인공{Appearance + 1}", Gear = Worn.ToList(), Mind = ActiveMind, Nature = ActiveMind != null ? ActiveMind.nature : InnerNature.None, Skills = new Dictionary<SkillKind, int>(SkillLevels),
+                Sprite = CharacterCreation.Looks[Appearance], Figure = $"주인공{Appearance + 1}", Gear = Worn.ToList(), Mind = ActiveMind, Skills = new Dictionary<SkillKind, int>(SkillLevels),
             };
 
         // Battle.Finish() 뒤에 부른다. 내상을 이어받고, 쓴 무공의 숙련도를 올린다.

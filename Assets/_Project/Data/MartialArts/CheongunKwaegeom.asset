@@ -13,11 +13,42 @@ MonoBehaviour:
   m_Name: CheongunKwaegeom
   m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
   displayName: "\uCCAD\uC6B4\uCF8C\uAC80"
+  grade: 0
   forms:
   - "청풍일섬"
   - "운중삼점"
-  - "유성쾌우"
   - "쾌검연환"
+  moves:
+  - name: "\uCCAD\uD48D\uC77C\uC12C"
+    stage: 1
+    innerCost: 8
+    cooldown: 0
+    power: 3
+    hits: 3
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
+  - name: "\uC6B4\uC911\uC0BC\uC810"
+    stage: 3
+    innerCost: 10
+    cooldown: 0
+    power: 4
+    hits: 3
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
+  - name: "\uCF8C\uAC80\uC5F0\uD658"
+    stage: 6
+    innerCost: 14
+    cooldown: 0
+    power: 4
+    hits: 4
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
   kind: 0
   skill: 1
   skillNeed: 0
@@ -27,7 +58,7 @@ MonoBehaviour:
   guard: 5
   affinity: 3
   weapon: 1
-  power: 5
+  power: 3
   hits: 3
   reachesBackRow: 0
   inflicts: 0

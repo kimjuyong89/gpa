@@ -13,12 +13,42 @@ MonoBehaviour:
   m_Name: Jeonjingeom
   m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
   displayName: "\uC804\uC9C4\uAC80\uBC95"
+  grade: 0
   forms:
   - "기수식"
   - "삼재검"
   - "칠성검"
-  - "회류검"
-  - "귀일"
+  moves:
+  - name: "\uAE30\uC218\uC2DD"
+    stage: 1
+    innerCost: 0
+    cooldown: 0
+    power: 5
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
+  - name: "\uC0BC\uC7AC\uAC80"
+    stage: 3
+    innerCost: 1
+    cooldown: 0
+    power: 6
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
+  - name: "\uCE60\uC131\uAC80"
+    stage: 6
+    innerCost: 2
+    cooldown: 0
+    power: 7
+    hits: 1
+    inflicts: 0
+    inflictChance: 0
+    inflictTurns: 0
+    guard: 5
   masteryScale: 4
   ascendsTo: {fileID: 11400000, guid: f8b487de80564f1388e646404c6bdd4d, type: 2}
   kind: 0
@@ -29,7 +59,7 @@ MonoBehaviour:
   guard: 5
   affinity: 1
   weapon: 1
-  power: 8
+  power: 5
   hits: 1
   reachesBackRow: 0
   inflicts: 0

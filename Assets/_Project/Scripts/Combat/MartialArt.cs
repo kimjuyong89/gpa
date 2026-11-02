@@ -7,14 +7,37 @@ namespace GPA.Combat
     public enum Affinity { None, Gang, Yu, Kwae }        // 강(剛), 유(柔), 쾌(快)
     public enum SkillKind { None, Sword, Blade, Palm, Finger, Fist, Kick, Hidden, Medicine, Poison, Antidote } // 검술, 도법, 장법, 지법, 권법, 각법, 암기, 의료, 독술, 해독
     public enum InnerNature { None, Yin, Yang, Harmony } // 내공 속성: 없음, 음, 양, 음양조화
+    public enum SectTrait { None, Unbroken, Predator } // 문파 고유 규칙: 없음, 검심불멸(연계 유지), 약자멸시(상태이상 적에게 강함)
     public enum Lineage { Common, Orthodox, Deviant, Universal } // 공용, 정종, 사공, 만류귀종(모든 계열)
     public enum StatusKind { None, Bleed, Poison, Pressure, InnerInjury, QiDeviation } // 출혈, 중독, 점혈, 내상, 주화입마
+
+    public enum ArtGrade { Third, Second, First, Peak, Supreme } // 삼류, 이류, 일류, 절정, 절세. 앞의 넷은 그 경지가 되어야 쓴다
+
+    // 초식 하나. 외공은 초식 단위로 쓴다.
+    [Serializable]
+    public class Move
+    {
+        public string name;
+        [Tooltip("이 숙련도(성)에 해금된다")]
+        public int stage = 1;
+        public int innerCost;
+        public int cooldown;
+        public int power;
+        public int hits = 1;
+        public StatusKind inflicts;
+        [Range(0, 1)] public float inflictChance;
+        public int inflictTurns;
+        public int guard;
+    }
 
     // 무공 하나의 데이터. 종류에 따라 쓰는 필드가 다르다.
     [CreateAssetMenu(menuName = "GPA/무공")]
     public class MartialArt : ScriptableObject
     {
         public string displayName;
+        public ArtGrade grade;
+        [Tooltip("외공의 초식. 비우면 아래 외공 칸이 초식 하나가 된다")]
+        public Move[] moves = Array.Empty<Move>();
         [Tooltip("초식 이름. 초식 연마 때 차례로 나온다")]
         public string[] forms = Array.Empty<string>();
         [Tooltip("6성부터 필요한 경험치 배수. 기본 무공처럼 끝이 먼 무공에 쓴다")]
@@ -56,8 +79,10 @@ namespace GPA.Combat
         public bool counter;
 
         [Header("심법·내공 (패시브)")]
-        [Tooltip("운용하면 이 내공 속성이 된다")]
+        [Tooltip("운용하면 이 길을 걷는다. 음이나 양이면 같은 속성만 배우고 바꿀 수 있고, 음양조화는 모두 열린다")]
         public InnerNature nature;
+        [Tooltip("다른 심법으로 바꿔도 숙련이 초기화되지 않는다")]
+        public bool keepsMastery;
         public int maxInnerBonus;
         [Tooltip("운기조식 회복량 추가 (%p)")]
         public int meditateBonus;
@@ -67,5 +92,17 @@ namespace GPA.Combat
         public StatusKind onHit;
         [Range(0, 1)] public float onHitChance;
         public int onHitTurns;
+
+        [NonSerialized] Move[] single;
+
+        // 초식 목록. 초식을 정해 두지 않은 무공은 무공 자체가 초식 하나다.
+        public Move[] Moves => moves.Length > 0 ? moves : single ??= new[]
+        {
+            new Move
+            {
+                name = displayName, innerCost = innerCost, cooldown = cooldown, power = power, hits = hits,
+                inflicts = inflicts, inflictChance = inflictChance, inflictTurns = inflictTurns, guard = guard,
+            },
+        };
     }
 }

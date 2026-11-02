@@ -32,6 +32,7 @@ namespace GPA.Prototype
         internal RegionView region; // 지금 노드의 지역맵. 없으면 null
         internal PanelSettings panelSettings;
         internal VisualElement UiRoot => root;
+        internal Combatant HeroUnitForTest => heroUnit;
         internal VisualElement DevRoot; // 개발 패널이 떠 있으면 그 화면
         internal DialogueBox TalkBox => talk;
 

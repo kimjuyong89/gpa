@@ -32,11 +32,18 @@ EXTERNAL find_art(file)
 
 // 문파. join_blocker는 입문을 막는 이유("" "소속" "파문" "성향" "평판")를 돌려준다.
 EXTERNAL sect()
+EXTERNAL rank()
+EXTERNAL rank_name()
+EXTERNAL ranking()
+EXTERNAL promote_blocker()
+EXTERNAL promote()
+EXTERNAL win_ranking()
 EXTERNAL join_blocker(id)
 EXTERNAL join(id)
 EXTERNAL is_disciple()
 EXTERNAL disciple()
 EXTERNAL knows(art)
+EXTERNAL can_learn(art)
 EXTERNAL learn(art)
 EXTERNAL secret_job(risk)
 EXTERNAL expel()
@@ -104,6 +111,24 @@ EXTERNAL expel()
 === function quest_stage(id)
 ~ return 0
 
+=== function rank()
+~ return 0
+
+=== function rank_name()
+~ return "외문제자"
+
+=== function ranking()
+~ return 10
+
+=== function promote_blocker()
+~ return ""
+
+=== function promote()
+~ return true
+
+=== function win_ranking()
+~ return
+
 === function sect()
 ~ return ""
 
@@ -121,6 +146,9 @@ EXTERNAL expel()
 
 === function knows(art)
 ~ return false
+
+=== function can_learn(art)
+~ return true
 
 === function learn(art)
 ~ return true

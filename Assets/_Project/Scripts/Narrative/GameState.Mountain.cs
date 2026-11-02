@@ -65,7 +65,7 @@ namespace GPA.Narrative
         {
             if (Hero.Fatigue + fatigue > Hero.MaxFatigue) return false;
             Hero.Fatigue += fatigue;
-            Add("산중.허기", -fatigue / 5 * HungerPerFiveFatigue);
+            if (InMountain) Add("산중.허기", -fatigue / 5 * HungerPerFiveFatigue);
             return true;
         }
 

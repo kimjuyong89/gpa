@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace GPA.Combat
 {
-    public enum ItemKind { Weapon, Clothes, Boots, Gloves, Trinket, Consumable, Elixir } // 앞 다섯의 순서가 장비 칸 번호다. 장신구는 4·5번 두 칸
-    public enum WeaponType { None, Sword, Dagger, Fist } // 검, 단검, 권
+    public enum ItemKind { Weapon, Clothes, Boots, Gloves, Trinket, Consumable, Elixir, Manual } // 앞 다섯의 순서가 장비 칸 번호다. 장신구는 4·5번 두 칸
+    public enum WeaponType { None, Sword, Dagger, Fist, Blade } // 검, 단검, 권, 도
 
     // 아이템 하나의 데이터. 에셋 파일 이름이 곧 게임에 보이는 이름이고 저장 키다.
     // Data/Resources/Items 아래에 두면 게임이 알아서 찾는다. 수치는 임시값 (docs/12_아이템.md).
@@ -16,8 +16,10 @@ namespace GPA.Combat
         public ItemKind kind;
         [Tooltip("기본 값. 0이면 상점에 팔 수 없다")]
         public int price;
-        [Tooltip("이 상점에서 판다. 비우면 팔지 않는다")]
+        [Tooltip("이 상점에서 판다. 비우면 팔지 않는다. 문파 이름이면 그 문파의 비고다")]
         public string shop = "";
+        [Tooltip("문파 비고에서 바꾸는 데 드는 공헌도")]
+        public int contribution;
 
         [Header("장비")]
         public WeaponType weapon;
@@ -44,6 +46,10 @@ namespace GPA.Combat
         [Header("영약")]
         [Tooltip("내공을 채우지 않아도, 폐관수련 없이 바로 다음 경지에 오른다. 큰 벽은 깨달음이 있어야 넘는다")]
         public bool breakthrough;
+
+        [Header("비급")]
+        [Tooltip("읽으면 익히는 무공")]
+        public MartialArt manual;
 
         public bool IsGear => kind < ItemKind.Consumable;
 

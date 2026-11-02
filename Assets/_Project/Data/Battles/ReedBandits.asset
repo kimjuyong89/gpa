@@ -20,12 +20,13 @@ MonoBehaviour:
     sprite: NinjaGray
     ally: 0
     row: 0
+    temper: 1
     realm: 0
     stats:
-      Outer: 5
+      Outer: 4
       Inner: 0
       Light: 5
-      Con: 2
+      Con: 1
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -35,12 +36,13 @@ MonoBehaviour:
     sprite: NinjaRed
     ally: 0
     row: 0
+    temper: 2
     realm: 0
     stats:
-      Outer: 6
+      Outer: 5
       Inner: 0
       Light: 5
-      Con: 4
+      Con: 3
       Wis: 0
       Virtue: 0
       Luck: 0
@@ -56,3 +58,5 @@ MonoBehaviour:
     chance: 0.05
   - item: {fileID: 11400000, guid: 015a83a0e375be240bfef1a1d9e8e777, type: 2}
     chance: 0.03
+  - item: {fileID: 11400000, guid: 45e9978ffb42485e86ca5f999b053ef0, type: 2}
+    chance: 0.08

@@ -13,10 +13,42 @@ MonoBehaviour:
   m_Name: HeuksaSwaehyeol
   m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
   displayName: "\uD751\uC0AC\uC1C4\uD608"
+  grade: 1
   forms:
   - "쇄혈수"
   - "봉맥지"
   - "단경삼절"
+  moves:
+  - name: "\uC1C4\uD608\uC218"
+    stage: 1
+    innerCost: 18
+    cooldown: 3
+    power: 15
+    hits: 1
+    inflicts: 3
+    inflictChance: 0.4
+    inflictTurns: 1
+    guard: 15
+  - name: "\uBD09\uB9E5\uC9C0"
+    stage: 3
+    innerCost: 12
+    cooldown: 0
+    power: 11
+    hits: 1
+    inflicts: 3
+    inflictChance: 0.25
+    inflictTurns: 1
+    guard: 15
+  - name: "\uB2E8\uACBD\uC0BC\uC808"
+    stage: 6
+    innerCost: 24
+    cooldown: 3
+    power: 10
+    hits: 3
+    inflicts: 3
+    inflictChance: 0.3
+    inflictTurns: 1
+    guard: 15
   kind: 0
   skill: 4
   skillNeed: 10
@@ -26,11 +58,11 @@ MonoBehaviour:
   guard: 15
   affinity: 2
   weapon: 2
-  power: 18
+  power: 15
   hits: 1
   reachesBackRow: 0
   inflicts: 3
-  inflictChance: 0.6
+  inflictChance: 0.4
   inflictTurns: 1
   swapsRow: 0
   speedBuff: 0

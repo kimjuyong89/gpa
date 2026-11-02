@@ -38,5 +38,5 @@ MonoBehaviour:
   meditateBonus: 0
   resists: 02000000
   onHit: 2
-  onHitChance: 0.3
+  onHitChance: 0.15
   onHitTurns: 3

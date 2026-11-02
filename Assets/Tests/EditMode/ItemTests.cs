@@ -85,7 +85,7 @@ namespace GPA.Tests
                 Gear = new[] { Make(ItemKind.Weapon, i => { i.attack = 10; i.weapon = WeaponType.Sword; }) },
             };
             Assert.AreEqual(1.1f, c.GearMultiplier(Art(WeaponType.Fist)), 0.001f);
-            Assert.AreEqual(1.1f * Combatant.WeaponMatch, c.GearMultiplier(Art(WeaponType.Sword)), 0.001f);
+            Assert.AreEqual(1.2f, c.GearMultiplier(Art(WeaponType.Sword)), 0.001f, "더한다");
             Assert.AreEqual(1.1f, c.GearMultiplier(Art()), 0.001f, "무기가 필요 없는 무공은 일치하지 않는다");
 
             var d = new Combatant("나", true, new Stats(), new[] { Art() }) { Gear = new[] { Make(ItemKind.Clothes, i => i.defense = 90) } };

@@ -17,7 +17,7 @@ namespace GPA.UI
         class Unit
         {
             public Combatant C;
-            public VisualElement Box, Sprite, HpFill, InnerFill;
+            public VisualElement Box, Sprite, HpFill, InnerFill, MomentumFill;
             public Label Status;
             public Sprite[] Idle;  // 픽셀 캐릭터의 숨쉬기 프레임. 입상이면 null
             public float Facing = 1;
@@ -105,13 +105,16 @@ namespace GPA.UI
             }
             u.Box.Add(u.Status);
             u.Box.Add(u.Sprite);
-            u.Box.Add(Ui.Text(c.Nature != InnerNature.None ? $"{c.Name} ({Combatant.NatureLabel(c.Nature)})" : c.Name, "unit-name"));
+            u.Box.Add(Ui.Text(c.Name, "unit-name"));
             var hp = Ui.Bar("bar-hp");
             var inner = Ui.Bar("bar-inner");
+            var momentum = Ui.Bar("bar-momentum");
             u.HpFill = hp.fill;
             u.InnerFill = inner.fill;
+            u.MomentumFill = momentum.fill;
             u.Box.Add(hp.bar);
             u.Box.Add(inner.bar);
+            u.Box.Add(momentum.bar);
             units.Add(u);
             return u.Box;
         }
@@ -144,10 +147,12 @@ namespace GPA.UI
             {
                 Ui.SetBar(u.HpFill, u.ShownHp / (float)u.C.MaxHp);
                 Ui.SetBar(u.InnerFill, u.C.MaxInner == 0 ? 0 : u.C.Inner / (float)u.C.MaxInner);
+                Ui.SetBar(u.MomentumFill, u.C.Momentum / (float)Combatant.MaxMomentum);
                 string st = string.Join(" ", u.C.Statuses.Select(s => Combatant.Label(s.Kind)));
                 if (u.C.InnerInjured) st += " 내상";
                 if (u.C.Guard > 0) st += $" 방어{u.C.Guard}";
                 if (u.C.EvasionBuff > 0) st += $" 회피{u.C.EvasionBuff}";
+                if (u.C.Intent != null && !u.C.IsDown) st = $"{IntentText(u.C.Intent)} {st}";
                 u.Status.text = st.Trim();
                 u.Box.EnableInClassList("unit-turn", u.C == battle.Current);
                 if (u.ShownHp <= 0) u.Box.style.opacity = 0.35f;
@@ -157,6 +162,9 @@ namespace GPA.UI
             foreach (var c in battle.PreviewOrder(8)) timeline.Add(Ui.Image(Ui.Portrait(FigureOf(c), c.Sprite), "face-small"));
             if (timeline.childCount > 1) timeline[1].AddToClassList("face-now");
         }
+
+        static string IntentText(Intent i) =>
+            i.Art == null ? "▶ 운기조식" : $"▶ {(i.Burst ? "절초! " : "")}{i.Move.name}→{i.Target.Name}";
 
         Unit Of(Combatant c) => units.First(u => u.C == c);
 
@@ -344,30 +352,76 @@ namespace GPA.UI
 
         void Back() => menu.Add(Ui.Btn("뒤로", ShowCommands, true, "art-btn"));
 
-        // 내력 소모나 남은 대기 턴.
-        static string CostNote(Combatant a, MartialArt art)
+        // 내력 소모나 남은 대기 턴, 쓸 수 없는 까닭.
+        static string CostNote(Combatant a, MartialArt art, Move m)
         {
+            if (!a.MeetsGrade(art)) return $"{MenuScreen.RealmNames[(int)art.grade]} 필요";
             if (!a.MeetsSkill(art)) return $"{Combatant.SkillLabel(art.skill)} {art.skillNeed} 필요";
-            int cd = a.Cooldown(art);
-            return cd > 0 ? $"대기{cd}" : a.Inner < a.CostOf(art) ? "내력 부족!" : $"내력{a.CostOf(art)}";
+            if (a.MasteryOf(art) < m.stage) return $"{m.stage}성 해금";
+            int cd = a.Cooldown(m);
+            return cd > 0 ? $"대기{cd}" : a.Inner < a.CostOf(art, m) ? "내력 부족!" : $"내력{a.CostOf(art, m)}";
         }
 
+        // 무공을 고른다. 쓸 수 있는 초식이 하나면 바로 쓰고, 여럿이면 초식을 고른다.
         void ShowArts()
         {
             var a = battle.Current;
-            prompt.text = "무공을 고르세요";
+            prompt.text = a.Burst ? "절초 준비! 무공을 고르세요" : "무공을 고르세요";
             menu.Clear();
+            if (!a.Burst && a.Momentum >= Combatant.BurstCost)
+                menu.Add(Ui.Btn($"절초\n기세{Combatant.BurstCost} 위력 +75%", () =>
+                {
+                    battle.ArmBurst();
+                    Sound.Play("Bonus");
+                    Refresh();
+                    ShowArts();
+                }, true, "art-btn"));
             foreach (var art in a.Arts.Where(x => x.kind == ArtKind.Outer))
             {
-                var targets = battle.Enemies.Where(t => battle.CanUse(art, t)).ToList();
-                string guard = art.guard > 0 ? $" 방어{art.guard}%" : "";
-                menu.Add(Ui.Btn($"{art.displayName}{FitTag(a.FitOf(art))}\n{Affinity(art)}{CostNote(a, art)}{guard}", () =>
+                var open = battle.OpenMoves(art).ToList();
+                var ready = open.Where(m => battle.Enemies.Any(t => battle.CanUse(art, m, t))).ToList();
+                var shown = open.Count > 0 ? open[0] : art.Moves[0];
+                string detail = open.Count > 1 ? $"초식 {open.Count}" : CostNote(a, art, shown);
+                menu.Add(Ui.Btn($"{art.displayName}{FitTag(a.FitOf(art))}\n{Affinity(art)}{detail}", () =>
                 {
-                    if (targets.Count == 1) Do(() => battle.UseArt(art, targets[0]));
-                    else ChooseTarget(art.displayName, targets, c => battle.UseArt(art, c));
-                }, targets.Count > 0, "art-btn"));
+                    if (open.Count > 1) ShowMoves(art);
+                    else Pick(art, ready[0]);
+                }, ready.Count > 0, "art-btn"));
             }
             menu.Add(Ui.Btn("운기조식\n내력 회복", () => Do(battle.Meditate), true, "art-btn"));
+            Back();
+        }
+
+        void ShowMoves(MartialArt art)
+        {
+            var a = battle.Current;
+            prompt.text = $"{art.displayName}: 초식을 고르세요";
+            menu.Clear();
+            foreach (var m in art.Moves)
+            {
+                string guard = m.guard > 0 ? $" 방어{m.guard}%" : "";
+                string combo = a.ComboNext(art, m) ? " 연계!" : "";
+                var targets = battle.Enemies.Where(t => battle.CanUse(art, m, t)).ToList();
+                menu.Add(Ui.Btn($"{m.name}{combo}\n{CostNote(a, art, m)}{guard}", () => Pick(art, m), targets.Count > 0, "art-btn"));
+            }
+            menu.Add(Ui.Btn("뒤로", ShowArts, true, "art-btn"));
+        }
+
+        void Pick(MartialArt art, Move m)
+        {
+            var targets = battle.Enemies.Where(t => battle.CanUse(art, m, t)).ToList();
+            if (targets.Count == 1) Do(() => battle.UseMove(art, m, targets[0]));
+            else ChooseTarget(m.name, targets, c => battle.UseMove(art, m, c));
+        }
+
+        void ShowSteps()
+        {
+            var a = battle.Current;
+            prompt.text = "경공·보법을 고르세요";
+            menu.Clear();
+            foreach (var art in a.Arts.Where(x => x.kind == ArtKind.Movement))
+                menu.Add(Ui.Btn($"{art.displayName}\n{CostNote(a, art, art.Moves[0])} · {art.buffTurns}턴\n방어 {art.guard}% 회피 {art.evasionBuff}%",
+                    () => Do(() => battle.UseArt(art)), battle.CanUse(art), "art-btn"));
             Back();
         }
 
@@ -379,17 +433,6 @@ namespace GPA.UI
             MindFit.Clash => $" -{(1 - Combatant.ClashPower) * 100:0}%!",
             _ => "",
         };
-
-        void ShowSteps()
-        {
-            var a = battle.Current;
-            prompt.text = "경공·보법을 고르세요";
-            menu.Clear();
-            foreach (var art in a.Arts.Where(x => x.kind == ArtKind.Movement))
-                menu.Add(Ui.Btn($"{art.displayName}\n{CostNote(a, art)} · {art.buffTurns}턴\n방어 {art.guard}% 회피 {art.evasionBuff}%",
-                    () => Do(() => battle.UseArt(art)), battle.CanUse(art), "art-btn"));
-            Back();
-        }
 
         static string Affinity(MartialArt art) => art.affinity switch
         {

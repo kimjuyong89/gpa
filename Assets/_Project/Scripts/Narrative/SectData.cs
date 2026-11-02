@@ -28,5 +28,9 @@ namespace GPA.Narrative
         public SectArt[] arts = Array.Empty<SectArt>();
         [Tooltip("직전제자만 배우는 비전 초식")]
         public MartialArt secretArt;
+        [Tooltip("소속 제자에게 붙는 전투 규칙")]
+        public SectTrait trait;
+        [Tooltip("문규: 이 계열의 무공을 쓰면 발각이 쌓인다. 공용이면 문규가 없다")]
+        public Lineage forbidden;
     }
 }
