@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ac2ce6f3d075ed4b8b2fde5a702f9c5, type: 3}
+  m_Name: MountainRaccoon
+  m_EditorClassIdentifier: GPA::GPA.Combat.BattleData
+  id: "\uC0B0_\uB108\uAD6C\uB9AC"
+  reward: 0
+  solo: 0
+  enemies:
+  - name: "\uB108\uAD6C\uB9AC"
+    sprite: Raccoon
+    ally: 0
+    row: 0
+    lane: 1
+    realm: 0
+    stats:
+      Outer: 2
+      Inner: 0
+      Light: 6
+      Con: 0
+      Wis: 0
+      Virtue: 0
+      Luck: 0
+    arts:
+    - {fileID: 11400000, guid: d6fcc074bec241b7a08ca8d3f8b45164, type: 2}
+  drops: []

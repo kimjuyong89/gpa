@@ -1,0 +1,260 @@
+/* 강호유랑기 UI 테마: 한지, 먹, 주묵.
+   한지·먹선·붓 획은 Tools/gen_ink_art.py가 그린다. 옥·청동 프레임은 UI/Xianxia (hoantdz 무료 샘플), 아이콘은 Icons (Jianghu Lite 등).
+   프레임 색은 정사 성향을 따른다: 기본(정파) 옥, 루트에 .theme-bronze가 붙으면(사파) 청동. */
+
+/* ───── 바탕 ───── */
+.game-root {
+    position: absolute; left: 0; right: 0; top: 0; bottom: 0;
+    -unity-font-definition: url("../Fonts/GowunBatang-Regular.ttf");
+    font-size: 21px;
+    color: rgb(36, 31, 26);
+}
+.fill { position: absolute; left: 0; right: 0; top: 0; bottom: 0; }
+.dim { background-color: rgba(20, 17, 14, 0.66); }
+.dark-bg { background-color: rgb(233, 222, 198); }
+.landscape { background-image: url("landscape.png"); background-size: 100% 100%; }
+.map-tone { background-color: rgba(214, 186, 130, 0.2); }
+.row { flex-direction: row; align-items: center; }
+.col { flex-direction: column; }
+.grow { flex-grow: 1; }
+.center { -unity-text-align: middle-center; }
+.wrap { white-space: normal; }
+
+/* ───── 글자 ───── */
+.title { font-size: 48px; -unity-font-definition: url("../Fonts/EastSeaDokdo-Regular.ttf"); color: rgb(30, 27, 24); }
+.heading {
+    font-size: 23px; -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); color: rgb(142, 32, 24);
+    margin-top: 6px; margin-bottom: 6px; padding-bottom: 5px; padding-left: 2px;
+    background-image: url("rule.png"); background-size: 180px 7px; background-position-x: left; background-position-y: bottom; background-repeat: no-repeat;
+    -unity-background-image-tint-color: rgba(30, 27, 24, 0.55);
+}
+.small { font-size: 18px; }
+.muted { color: rgb(112, 100, 84); }
+.warn { color: rgb(158, 36, 28); }
+.good { color: rgb(46, 92, 60); -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); }
+
+/* ───── 패널: 한지에 손으로 그은 먹선 (frame.png 9-slice) ───── */
+.panel {
+    background-image: url("frame.png");
+    -unity-slice-left: 64; -unity-slice-right: 64; -unity-slice-top: 64; -unity-slice-bottom: 64;
+    -unity-slice-scale: 0.5px;
+    border-width: 0;
+    padding: 26px 30px 24px 30px;
+}
+
+/* ───── 버튼: 옥 프레임 9-slice (512x160, 112/48, 0.4배). 사파는 청동 ───── */
+.btn {
+    background-image: url("Xianxia/btn_jade.png");
+    background-color: rgba(0, 0, 0, 0);
+    -unity-slice-left: 112; -unity-slice-right: 112; -unity-slice-top: 48; -unity-slice-bottom: 48;
+    -unity-slice-scale: 0.4px;
+    border-width: 0; border-radius: 0;
+    margin: 4px;
+    padding: 6px 26px;
+    min-height: 48px;
+    color: rgb(244, 236, 220);
+    font-size: 20px;
+    -unity-text-align: middle-center;
+    white-space: normal;
+    transition-property: scale, opacity; transition-duration: 0.08s;
+}
+.btn:hover { background-image: url("Xianxia/btn_jade_hover.png"); background-color: rgba(0, 0, 0, 0); scale: 1.03; }
+.btn:active { background-image: url("Xianxia/btn_jade_pressed.png"); background-color: rgba(0, 0, 0, 0); scale: 0.98; }
+.btn:disabled { background-image: url("Xianxia/btn_jade.png"); color: rgb(238, 230, 212); opacity: 0.4; }
+.btn-selected { background-image: url("Xianxia/btn_jade_hover.png"); }
+.btn-small { min-height: 36px; min-width: 48px; font-size: 20px; padding: 0 10px; -unity-slice-scale: 0.3px; margin: 2px; }
+
+.theme-bronze .btn { background-image: url("Xianxia/btn_bronze.png"); }
+.theme-bronze .btn:hover, .theme-bronze .btn-selected { background-image: url("Xianxia/btn_bronze_hover.png"); }
+.theme-bronze .btn:active { background-image: url("Xianxia/btn_bronze_pressed.png"); }
+.theme-bronze .btn:disabled { background-image: url("Xianxia/btn_bronze.png"); }
+
+/* 탭: 글자 + 주묵 밑줄. 메뉴 상단 */
+.tab {
+    background-color: rgba(0, 0, 0, 0); border-width: 0; border-radius: 0; margin: 0 6px; padding: 4px 12px 8px 12px;
+    font-size: 22px; color: rgb(112, 100, 84); -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf");
+    background-image: url("rule.png"); background-size: 100% 6px; background-position-x: center; background-position-y: bottom; background-repeat: no-repeat;
+    -unity-background-image-tint-color: rgba(0, 0, 0, 0);
+    transition-property: color; transition-duration: 0.1s;
+}
+.tab:hover { color: rgb(36, 31, 26); background-color: rgba(0, 0, 0, 0); }
+.tab-selected { color: rgb(142, 32, 24); -unity-background-image-tint-color: rgb(158, 36, 28); }
+.tab-selected:hover { color: rgb(142, 32, 24); }
+
+/* ───── 막대: 옥 프레임(768x96, 채움 x96~672 y38~58) 0.25배 → 높이 24, 안쪽 5px ───── */
+.bar {
+    height: 24px;
+    padding: 9px 24px 10px 24px;
+    background-image: url("Xianxia/bar.png");
+    -unity-slice-left: 96; -unity-slice-right: 96; -unity-slice-top: 32; -unity-slice-bottom: 32;
+    -unity-slice-scale: 0.25px;
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+}
+.bar-fill { height: 100%; transition-property: width; transition-duration: 0.25s; }
+.bar-hp { background-color: rgb(168, 42, 32); }
+.bar-inner { background-color: rgb(58, 104, 128); }
+.bar-fatigue { background-color: rgb(176, 130, 54); }
+.bar-heat { background-color: rgb(168, 42, 32); }
+.bar-scatter { background-color: rgb(104, 108, 116); }
+
+/* ───── 얼굴: 옥 원형 테두리(512px, 안쪽 원 ≈ 400px → 0.78배). 사파는 청동 ───── */
+.face-box {
+    width: 124px; height: 124px;
+    background-image: url("Xianxia/portrait_jade.png");
+    background-size: 100% 100%;
+    align-items: center; justify-content: center;
+    flex-shrink: 0;
+}
+.theme-bronze .face-box { background-image: url("Xianxia/portrait_bronze.png"); }
+.face { width: 96px; height: 96px; border-radius: 48px; background-size: cover; background-color: rgb(226, 214, 188); }
+.face-small {
+    width: 46px; height: 46px; margin: 2px; border-radius: 23px; border-width: 2px; border-color: rgb(52, 44, 36);
+    background-color: rgb(218, 204, 174); background-size: cover;
+}
+.seal { width: 56px; height: 56px; background-image: url("seal.png"); }
+
+/* ───── 아이템 아이콘: 등급 프레임 안에 32px 픽셀 아이콘(2배) 또는 한자 ───── */
+.item-icon-box {
+    width: 54px; height: 54px; margin-right: 12px; flex-shrink: 0;
+    background-image: url("Xianxia/frame_t1.png"); background-size: 100% 100%;
+    align-items: center; justify-content: center;
+}
+.item-icon-box.frame-t3 { background-image: url("Xianxia/frame_t3.png"); }
+.item-icon-box.frame-t5 { background-image: url("Xianxia/frame_t5.png"); }
+.item-icon { width: 40px; height: 40px; background-size: 100% 100%; }
+.item-glyph { font-size: 26px; -unity-font-definition: url("../Fonts/YujiBoku-Regular.ttf"); color: rgb(52, 44, 36); -unity-text-align: middle-center; margin: 0; padding: 0; }
+
+/* ───── 입력창 ───── */
+.game-root TextField { font-size: 22px; margin: 0; }
+.game-root .unity-text-field__input {
+    background-color: rgba(255, 250, 236, 0.55); border-width: 0 0 2px 0; border-color: rgb(30, 27, 24); border-radius: 0;
+    color: rgb(30, 27, 24); padding: 6px 8px;
+}
+
+/* ───── 지도 HUD ───── */
+.hud { position: absolute; left: 14px; top: 14px; padding: 14px 22px 14px 18px; min-width: 340px; flex-direction: row; align-items: center; }
+.hud .face-box { width: 84px; height: 84px; margin-right: 12px; }
+.hud .face { width: 66px; height: 66px; border-radius: 33px; }
+.hud-info { flex-grow: 1; }
+.hud-name { font-size: 24px; -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); color: rgb(30, 27, 24); margin: 0; padding: 0; }
+.hud-realm { font-size: 17px; color: rgb(142, 32, 24); margin-left: 8px; -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); }
+.hud-line { font-size: 17px; color: rgb(84, 74, 60); margin: 0; padding: 0; white-space: normal; }
+.hud .bar { width: 200px; margin-top: 4px; }
+.coin { width: 22px; height: 22px; background-image: url("../Icons/coin.png"); background-size: 100% 100%; margin-right: 4px; }
+.hud-menu { position: absolute; right: 16px; top: 16px; }
+.hint { position: absolute; bottom: 12px; align-self: center; font-size: 17px; color: rgb(84, 74, 60); background-color: rgba(233, 222, 198, 0.85); padding: 4px 18px; border-radius: 2px; }
+.toast { position: absolute; left: 0; right: 0; top: 24px; align-items: center; }
+.toast-text {
+    background-image: url("btn_hover.png"); background-size: 100% 100%; background-color: rgba(0, 0, 0, 0);
+    padding: 8px 36px; min-height: 48px; color: rgb(244, 236, 220); font-size: 20px; -unity-text-align: middle-center;
+    -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf");
+}
+
+/* ───── 대화창: 한지 상자, 주묵 붓 획 이름판 ───── */
+.dialogue { position: absolute; left: 72px; right: 72px; bottom: 18px; height: 208px; flex-direction: row; align-items: center; padding: 22px 34px 22px 26px; }
+.dialogue .face-box { width: 156px; height: 156px; }
+.dialogue .face { width: 122px; height: 122px; border-radius: 61px; }
+.dialogue-text { flex-grow: 1; flex-shrink: 1; margin-left: 22px; height: 100%; }
+.speaker {
+    align-self: flex-start; background-image: url("btn_hover.png"); background-size: 100% 100%;
+    padding: 2px 22px 4px 22px; min-height: 36px; margin: -6px 0 8px -6px;
+    font-size: 21px; -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); color: rgb(244, 236, 220); -unity-text-align: middle-center;
+}
+.line { white-space: normal; font-size: 23px; color: rgb(36, 31, 26); }
+.choices { position: absolute; right: 84px; bottom: 232px; width: 560px; }
+.more { position: absolute; right: 34px; bottom: 22px; color: rgb(142, 32, 24); }
+
+/* ───── 전투 ───── */
+.stage { position: absolute; left: 0; right: 0; top: 0; bottom: 224px; background-image: url("battle_bg.png"); background-size: 100% 100%; }
+.timeline {
+    position: absolute; left: 12px; top: 10px; flex-direction: row; align-items: center;
+    background-color: rgba(233, 222, 198, 0.86); border-width: 1px; border-color: rgb(52, 44, 36); padding: 4px 12px; border-radius: 28px;
+}
+.face-now { border-color: rgb(158, 36, 28); border-width: 3px; width: 52px; height: 52px; border-radius: 26px; }
+.unit { position: absolute; width: 200px; align-items: center; transform-origin: center bottom; }
+.unit-sprite { width: 96px; height: 96px; }
+.unit-body { width: 200px; height: 290px; background-size: contain; background-position-x: center; background-position-y: bottom; transform-origin: center bottom; }
+.unit-name { font-size: 17px; -unity-text-align: middle-center; background-color: rgba(233, 222, 198, 0.9); padding: 1px 10px; border-radius: 2px; }
+.unit-status { font-size: 16px; color: rgb(142, 32, 24); height: 22px; -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); }
+.unit .bar { width: 150px; margin-top: 2px; height: 20px; padding: 7px 20px 8px 20px; -unity-slice-scale: 0.21px; }
+.unit-target { background-color: rgba(158, 36, 28, 0.28); border-radius: 8px; }
+.unit-turn .unit-name { background-color: rgb(30, 27, 24); color: rgb(240, 230, 208); }
+.fx { position: absolute; left: 48px; top: 70px; width: 104px; height: 128px; }
+.float { position: absolute; left: 0; right: 0; top: 60px; -unity-text-align: middle-center; font-size: 36px; -unity-font-definition: url("../Fonts/EastSeaDokdo-Regular.ttf"); color: rgb(158, 36, 28); -unity-text-outline-width: 1px; -unity-text-outline-color: rgb(240, 230, 208); }
+.float-crit { font-size: 56px; }
+.float-info { font-size: 28px; color: rgb(30, 27, 24); }
+.float-status { font-size: 28px; color: rgb(52, 84, 104); }
+.float-heal { color: rgb(46, 92, 60); }
+.command { position: absolute; left: 0; right: 0; bottom: 0; height: 232px; flex-direction: row; }
+.command .panel { padding: 18px 22px 14px 22px; margin: 0 -8px 0 0; }
+.command-log { width: 380px; }
+.command-menu { flex-grow: 1; flex-shrink: 1; flex-wrap: wrap; flex-direction: row; align-content: flex-start; }
+.art-btn { width: 196px; min-height: 68px; padding: 4px 16px; font-size: 18px; }
+.result { position: absolute; left: 0; right: 0; top: 0; bottom: 0; align-items: center; justify-content: center; background-color: rgba(20, 17, 14, 0.5); }
+.result .panel { min-width: 360px; align-items: center; }
+
+/* ───── 메뉴 ───── */
+.menu { position: absolute; left: 90px; right: 90px; top: 30px; bottom: 30px; }
+.menu-tabs { flex-direction: row; align-items: flex-end; margin-bottom: 12px; padding-bottom: 2px; border-bottom-width: 1px; border-color: rgba(52, 44, 36, 0.35); }
+.bag { flex-direction: row; flex-grow: 1; flex-basis: 0; min-height: 0; }
+.bag-worn { width: 340px; flex-shrink: 0; margin-right: 18px; }
+.item-list { flex-grow: 1; flex-basis: 0; }
+.item-row { flex-direction: row; align-items: center; padding: 5px 4px; border-bottom-width: 1px; border-color: rgba(52, 44, 36, 0.22); }
+.item-row:hover { background-color: rgba(30, 27, 24, 0.05); }
+.item-text { flex-grow: 1; flex-shrink: 1; }
+.item-name { -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); }
+.item-text Label { margin: 0; padding: 0; }
+.item-btn { width: 112px; min-height: 42px; padding: 2px 6px; flex-shrink: 0; font-size: 18px; -unity-slice-scale: 0.34px; }
+.shop { flex-direction: row; flex-grow: 1; flex-basis: 0; min-height: 0; }
+.shop-side { flex-grow: 1; flex-basis: 0; margin: 0 8px; }
+.stat-row { flex-direction: row; align-items: center; margin-bottom: 1px; }
+.stat-name { width: 74px; -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); }
+.stat-value { width: 40px; -unity-text-align: middle-center; }
+.grid-head { flex-direction: row; margin-left: 4px; }
+.grid-head Label { width: 150px; -unity-text-align: middle-center; color: rgb(112, 100, 84); }
+.grid-row { flex-direction: row; }
+.grid-cell { width: 142px; min-height: 52px; }
+.grid-empty { opacity: 0.55; }
+
+/* ───── 일주천 ───── */
+.circ { position: absolute; left: 0; right: 0; top: 0; bottom: 0; flex-direction: row; align-items: center; justify-content: center; }
+.circ-figure { width: 560px; height: 668px; background-image: url("meditate.png"); background-size: 100% 100%; }
+.circ-node { position: absolute; width: 16px; height: 16px; margin-left: -8px; margin-top: -8px; border-radius: 8px; border-width: 2px; border-color: rgb(30, 27, 24); background-color: rgb(233, 222, 198); }
+.circ-passed { background-color: rgb(158, 36, 28); }
+.circ-blocked { width: 26px; height: 26px; margin-left: -13px; margin-top: -13px; border-radius: 13px; border-width: 4px; border-color: rgb(158, 36, 28); background-color: rgb(30, 27, 24); }
+.circ-name { position: absolute; left: 20px; top: -8px; font-size: 16px; color: rgb(36, 31, 26); }
+.circ-qi { position: absolute; width: 24px; height: 24px; margin-left: -12px; margin-top: -12px; border-radius: 12px; border-width: 3px; border-color: rgb(244, 234, 212); background-color: rgb(214, 150, 40); }
+.circ-side { width: 560px; margin-left: 24px; }
+.circ-side .bar { margin-bottom: 6px; }
+.circ-gauge { height: 42px; margin: 4px 0 10px 0; background-color: rgba(30, 27, 24, 0.14); border-width: 2px; border-color: rgb(30, 27, 24); }
+.circ-band { position: absolute; top: 0; bottom: 0; background-color: rgba(158, 36, 28, 0.55); }
+.circ-marker { position: absolute; top: -5px; bottom: -5px; width: 8px; margin-left: -4px; background-color: rgb(30, 27, 24); }
+.circ-choice { width: 620px; }
+
+/* ───── 초식 연마 ───── */
+.form-side { width: 400px; margin-right: 28px; }
+.form-name { font-size: 34px; color: rgb(142, 32, 24); -unity-font-definition: url("../Fonts/GowunBatang-Bold.ttf"); -unity-text-align: middle-center; height: 52px; }
+.form-figure { height: 400px; background-size: contain; background-position-x: center; background-position-y: bottom; }
+.form-fx { position: absolute; right: 0; top: 90px; width: 150px; height: 180px; }
+.form-need { position: absolute; top: -5px; bottom: -5px; width: 4px; margin-left: -2px; background-color: rgb(30, 27, 24); }
+.form-board { width: 520px; height: 690px; padding: 0; flex-direction: row; overflow: hidden; }
+.form-lane { flex-grow: 1; flex-basis: 0; border-right-width: 1px; border-color: rgba(52, 44, 36, 0.3); }
+.form-lane-on { background-color: rgba(158, 36, 28, 0.2); }
+.form-key { position: absolute; bottom: 14px; left: 0; right: 0; -unity-text-align: middle-center; font-size: 19px; color: rgb(104, 92, 76); }
+.form-line { position: absolute; left: 0; right: 0; top: 590px; height: 6px; background-color: rgb(158, 36, 28); }
+.form-note { position: absolute; left: 14px; right: 14px; height: 26px; margin-top: -13px; border-radius: 12px; background-color: rgb(30, 27, 24); }
+.form-judge { position: absolute; left: 0; right: 0; top: 500px; -unity-text-align: middle-center; font-size: 40px; -unity-font-definition: url("../Fonts/EastSeaDokdo-Regular.ttf"); color: rgb(142, 32, 24); }
+
+/* ───── 개발 패널 ───── */
+.dev-row { flex-direction: row; flex-wrap: wrap; }
+.dev-btn { min-height: 36px; padding: 2px 16px; margin: 2px; font-size: 17px; -unity-slice-scale: 0.3px; }
+
+/* ───── 캐릭터 생성 ───── */
+.title-col { position: absolute; left: 70px; top: 26px; width: 130px; align-items: center; }
+.title-hanja { font-size: 76px; -unity-font-definition: url("../Fonts/YujiBoku-Regular.ttf"); color: rgb(30, 27, 24); -unity-text-align: middle-center; white-space: normal; width: 110px; }
+.create { position: absolute; left: 260px; right: 70px; top: 24px; bottom: 24px; }
+.look { width: 104px; height: 104px; margin: 3px; opacity: 0.55; transition-property: opacity, scale; transition-duration: 0.12s; }
+.look .face { width: 80px; height: 80px; border-radius: 40px; }
+.look:hover { opacity: 0.85; }
+.look-selected { opacity: 1; scale: 1.1; }

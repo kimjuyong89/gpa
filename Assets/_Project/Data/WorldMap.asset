@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80c7d44ecdfdaa847a3769fabee9f0e3, type: 3}
+  m_Name: WorldMap
+  m_EditorClassIdentifier: GPA:GPA.World:WorldMapData
+  start: "\uBC31\uB85C\uC9C4"
+  overworld: "\uAC15\uD638"
+  nodes:
+  - id: "\uBC31\uB85C\uC9C4"
+    kind: 0
+    encounterChance: 0
+    encounters: []
+    region: {fileID: 11400000, guid: cfd417a9629830846b021cb737e461b1, type: 2}
+  - id: "\uBB34\uBA85\uC0B0"
+    kind: 1
+    encounterChance: 0
+    encounters: []
+    region: {fileID: 11400000, guid: d8c6f28fba4a497f8eb155f5b6152a6f, type: 2}
+  - id: "\uAC08\uB300\uBC2D"
+    kind: 1
+    encounterChance: 0.1
+    encounters:
+    - "\uAC08\uB300\uBC2D_\uB3C4\uC801"
+    region: {fileID: 0}
+  - id: "\uAD00\uB3C4 \uAC08\uB9BC\uAE38"
+    kind: 2
+    encounterChance: 0
+    encounters: []
+    region: {fileID: 0}
+  - id: "\uAC15\uD638"
+    kind: 1
+    encounterChance: 0
+    encounters: []
+    region: {fileID: 11400000, guid: 06d05f2d092cafe4b90b30ccb02b852b, type: 2}

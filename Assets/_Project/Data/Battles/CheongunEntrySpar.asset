@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ac2ce6f3d075ed4b8b2fde5a702f9c5, type: 3}
+  m_Name: CheongunEntrySpar
+  m_EditorClassIdentifier: GPA::GPA.Combat.BattleData
+  id: "\uCCAD\uC6B4\uAC80\uBB38_\uC785\uBB38\uB300\uB828"
+  reward: 0
+  solo: 1
+  enemies:
+  - name: "\uACE0\uC9C4\uC545"
+    sprite: NinjaBlue
+    ally: 0
+    row: 0
+    realm: 0
+    nature: 2
+    stats:
+      Str: 10
+      Agi: 8
+      Con: 6
+      Wis: 0
+      Virtue: 0
+      Luck: 2
+    arts:
+    - {fileID: 11400000, guid: 8642f3a8fe4ee204689db5c818bbc54d, type: 2}
+    - {fileID: 11400000, guid: 289a98612b55aa74d89bade3cf7dd77f, type: 2}
+    - {fileID: 11400000, guid: 81259addc54c44d41861c92b8f61e791, type: 2}

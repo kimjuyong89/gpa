@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b62e380ccbfc054284633377850eb6a, type: 3}
+  m_Name: Claw
+  m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
+  displayName: "\uD560\uD034\uAE30"
+  kind: 0
+  innerCost: 0
+  cooldown: 0
+  guard: 0
+  affinity: 0
+  power: 7
+  hits: 1
+  reachesBackRow: 0
+  inflicts: 0
+  inflictChance: 0
+  inflictTurns: 0
+  swapsRow: 0
+  speedBuff: 0
+  evasionBuff: 0
+  buffTurns: 0
+  counter: 0
+  maxInnerBonus: 0
+  meditateBonus: 0
+  resists: 
+  onHit: 0
+  onHitChance: 0
+  onHitTurns: 0

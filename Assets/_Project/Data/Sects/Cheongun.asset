@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ff3d10b4efecc4295cf0271037a2c6, type: 3}
+  m_Name: Cheongun
+  m_EditorClassIdentifier: GPA::GPA.Narrative.SectData
+  id: "\uCCAD\uC6B4\uAC80\uBB38"
+  alignment: "\uC815\uD30C"
+  master: "\uC724\uBC31\uC0B0"
+  discipleAffinity: 10
+  onCaught: 0
+  arts:
+  - art: {fileID: 11400000, guid: 8642f3a8fe4ee204689db5c818bbc54d, type: 2}
+    contribution: 0
+  - art: {fileID: 11400000, guid: 81259addc54c44d41861c92b8f61e791, type: 2}
+    contribution: 0
+  - art: {fileID: 11400000, guid: d644da6dcb3b23349b8de5a049b8430a, type: 2}
+    contribution: 30
+  secretArt: {fileID: 11400000, guid: 3bf065379d99af047abf9cf8f8ba2d70, type: 2}

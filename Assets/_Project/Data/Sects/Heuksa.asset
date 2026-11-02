@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6ff3d10b4efecc4295cf0271037a2c6, type: 3}
+  m_Name: Heuksa
+  m_EditorClassIdentifier: GPA::GPA.Narrative.SectData
+  id: "\uD751\uC0AC\uBC29"
+  alignment: "\uC0AC\uD30C"
+  master: "\uD0C1\uC6C5"
+  discipleAffinity: 10
+  onCaught: 1
+  arts:
+  - art: {fileID: 11400000, guid: 6b3e1d54630a83543a5a484ef40f67bd, type: 2}
+    contribution: 0
+  - art: {fileID: 11400000, guid: 728e4849d2e882f46b75416f787db82b, type: 2}
+    contribution: 0
+  - art: {fileID: 11400000, guid: 2efb1275af607594ebdd5c36c92a5888, type: 2}
+    contribution: 30
+  secretArt: {fileID: 11400000, guid: ce7488d60ad912246994c74b264b9fd3, type: 2}

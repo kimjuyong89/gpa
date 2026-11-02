@@ -1,4 +1,9 @@
 {
     "name": "GPA",
-    "rootNamespace": "GPA"
+    "rootNamespace": "GPA",
+    "references": [
+        "Ink-Libraries",
+        "Unity.InputSystem",
+        "UnityEngine.UI"
+    ]
 }

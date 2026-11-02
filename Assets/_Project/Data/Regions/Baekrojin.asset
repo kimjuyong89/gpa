@@ -1,0 +1,188 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31d3bc35b852074bb9d8ec1faa563cf, type: 3}
+  m_Name: Baekrojin
+  m_EditorClassIdentifier: GPA::GPA.World.RegionData
+  layout: 'T.T,..,.,.,,.........,...,...T..
+
+    .,,..C....T.....T..,....,.......
+
+    ......,.......,..,,.....,.......
+
+    ..........,........,......,.,,..
+
+    .,,.,.5=,.........h.,,==b...,.T.
+
+    .,....==8...A.........==...,,...
+
+    ......G=..........,...=4........
+
+    ......==.........,....==........
+
+    ......==.....1..,..,..==.......,
+
+    E===========@===================
+
+    ================================
+
+    .....p...r...==.......m..=..q.,.
+
+    T........T...==...T.....H,..,T..
+
+    ,...,W,......==.....,,..,...,.,.
+
+    ........,.,..==......,.,.....,..
+
+    ............,==.,...,....6......
+
+    ....==7=======2==============..,
+
+    ~~~~~~~~~~~~~##~~~~~~~~~~~~~~~~~
+
+    ~~~~~~~~~~~~~3#~~~~~.9~~~~~~~~~~
+
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~'
+  tiles:
+  - key: .
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 0, y: 12}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: ','
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 12}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: =
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 8}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: ~
+    sheet: {fileID: 2800000, guid: e51555438d0766546a70233628d520ed, type: 3}
+    cell: {x: 11, y: 0}
+    size: {x: 1, y: 1}
+    solid: 1
+    ground: .
+  - key: '#'
+    sheet: {fileID: 2800000, guid: e51555438d0766546a70233628d520ed, type: 3}
+    cell: {x: 5, y: 13}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: T
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 0, y: 0}
+    size: {x: 2, y: 2}
+    solid: 1
+    ground: .
+  - key: C
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 12, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+  - key: A
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 16, y: 0}
+    size: {x: 3, y: 3}
+    solid: 1
+    ground: .
+  - key: H
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 19, y: 0}
+    size: {x: 3, y: 3}
+    solid: 1
+    ground: .
+  - key: h
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 0, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+  - key: b
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 4, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+  - key: G
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 0, y: 5}
+    size: {x: 2, y: 2}
+    solid: 0
+    ground: =
+  - key: W
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 8, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+  npcs:
+  - key: 1
+    name: "\uC810\uC18C\uC774"
+    sheet: {fileID: 2800000, guid: d85be8fbc8baba948b5e45bc66f0db15, type: 3}
+    knot: "\uAC1D\uC794_\uC810\uC18C\uC774"
+  - key: 2
+    name: "\uD751\uC0AC\uBC29 \uC878\uAC1C"
+    sheet: {fileID: 2800000, guid: 39a9ca0cfe37db243859f5a633796bfa, type: 3}
+    knot: "\uB098\uB8E8\uD130_\uD751\uC0AC\uBC29"
+  - key: 3
+    name: "\uD751\uC0AC\uBC29 \uC5F0\uB77D\uCC45"
+    sheet: {fileID: 2800000, guid: f656bb9e3806f7c4ba018c3a611a5d60, type: 3}
+    knot: "\uD751\uC0AC\uBC29_\uBC00\uC218_\uC758\uB8B0"
+  - key: 4
+    name: "\uC18C\uC721"
+    sheet: {fileID: 2800000, guid: a5db9a4cb7d91614da30be37fcfd091a, type: 3}
+    knot: "\uB4B7\uACE8\uBAA9_\uC18C\uC721"
+  - key: 5
+    name: "\uC724\uBC31\uC0B0"
+    sheet: {fileID: 2800000, guid: adf4f3922b3da9248a970f5562e2684e, type: 3}
+    knot: "\uC724\uBC31\uC0B0"
+  - key: 6
+    name: "\uD0C1\uC6C5"
+    sheet: {fileID: 2800000, guid: 7144601eef62c0c4089e0f72cafa8b18, type: 3}
+    knot: "\uD0C1\uC6C5"
+  - key: 7
+    name: "\uCC3D\uACE0\uC9C0\uAE30"
+    sheet: {fileID: 2800000, guid: 994e2165d1481844aa8d56bce72579df, type: 3}
+    knot: "\uB098\uB8E8\uD130_\uCC3D\uACE0"
+  - key: 8
+    name: "\uACE0\uC9C4\uC545"
+    sheet: {fileID: 2800000, guid: d0bb78f57b5e07b4091704a779c01c88, type: 3}
+    knot: "\uACE0\uC9C4\uC545"
+  - key: 9
+    name: "\uC740\uB454 \uB178\uC778"
+    sheet: {fileID: 2800000, guid: a7cd6be07b005e34986e2183b2c355e0, type: 3}
+    knot: "\uAC15\uBCC0_\uC740\uB454\uB178\uC778"
+  - key: m
+    name: "\uC7A5\uD130 \uC0C1\uC778"
+    sheet: {fileID: 2800000, guid: a7cd6be07b005e34986e2183b2c355e0, type: 3}
+    knot: "\uC7A5\uD130_\uC0C1\uC778"
+  - key: p
+    name: "\uC11D\uB450"
+    sheet: {fileID: 2800000, guid: 560e1066b55e31142a399c4f8f374269, type: 3}
+    knot: "\uB5A0\uB3CC\uC774_\uC11D\uB450"
+  - key: q
+    name: "\uC6B4\uD559"
+    sheet: {fileID: 2800000, guid: 5250680745645914ba16be154dabd870, type: 3}
+    knot: "\uB0AD\uC778_\uC6B4\uD559"
+  - key: r
+    name: "\uC5F0\uC544"
+    sheet: {fileID: 2800000, guid: d7ce2e80ef9fe3f49af0e29744beb4d7, type: 3}
+    knot: "\uC18C\uB140_\uC5F0\uC544"
+  start: '@'
+  exit: E
+  specialGround: =

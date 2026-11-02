@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31d3bc35b852074bb9d8ec1faa563cf, type: 3}
+  m_Name: Overworld
+  m_EditorClassIdentifier: GPA::GPA.World.RegionData
+  layout: 'M.M,M.M.M.M.M.M.M.M.M,M.M.M.M..~~.M,M.M.M.M.M.M.
+
+    ..........,.............,......~~.,...,.........
+
+    M.............,........,.......~~.,,...,,...,.M.
+
+    ..............,....,...........~~..........,,...
+
+    M...........T..................~~.........T..,M.
+
+    ......T................,..,....~~...T...........
+
+    M.................,.,..........~~............,M.
+
+    ,...,....T,............,..,....~~.,...........,.
+
+    M......,.,.......C...h...b....,~~.,....T......M.
+
+    ........,.....,...,,............~~..,...........
+
+    M....,.........,.....,..,.......~~.....,.....,M.
+
+    ............,.T........P........~~..,,.......,..
+
+    M...........,..........@.......,~~.....,......M.
+
+    .......................=.....,..~~............,,
+
+    ...============================###===========X.,
+
+    ...........=.....,..........,...~~..,...........
+
+    M.......,..=....................~~.....,,.....M.
+
+    ...,"""""""""""""""".....,......~~....,....T.,..
+
+    M,,,""""""""""""""""............~~,....,......M.
+
+    ...."""""""""""""""".......T...,~~,..T..........
+
+    M...""""""""""""""""...........~~.............M.
+
+    ,...""""""""""""""""...........~~........T,.....
+
+    M.,.""""""""""""""""....T......~~.........,...M.
+
+    ..,.""""""""""""""""...........~~........,......
+
+    M...""""""""""""""""..........,~~..,T.........M.
+
+    ,...""""""""""""""""...........~~,.....,........
+
+    M...""""""""""""""""....,......~~.......,.....M.
+
+    .....................,.......,,~~........,,.....
+
+    T.T.T.T.T.T.T.T.T.T.T.T.T.T.T.,~~.T.T.T.T.T.T.T.
+
+    ,........,...............,.....~~...............'
+  tiles:
+  - key: .
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 0, y: 12}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: ','
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 12}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: =
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 8}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: ~
+    sheet: {fileID: 2800000, guid: e51555438d0766546a70233628d520ed, type: 3}
+    cell: {x: 11, y: 0}
+    size: {x: 1, y: 1}
+    solid: 1
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: '#'
+    sheet: {fileID: 2800000, guid: e51555438d0766546a70233628d520ed, type: 3}
+    cell: {x: 5, y: 13}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: T
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 0, y: 0}
+    size: {x: 2, y: 2}
+    solid: 1
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: M
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 16, y: 8}
+    size: {x: 2, y: 2}
+    solid: 1
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: h
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 0, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: b
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 4, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: C
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 12, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+    overlay: 0
+    portal: 
+    encounterNode: 
+  - key: '"'
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 7, y: 11}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 1
+    portal: 
+    encounterNode: "\uAC08\uB300\uBC2D"
+  - key: P
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 8}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 0
+    portal: "\uBC31\uB85C\uC9C4"
+    encounterNode: 
+  - key: X
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 8}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+    overlay: 0
+    portal: "\uAD00\uB3C4 \uAC08\uB9BC\uAE38"
+    encounterNode: 
+  npcs: []
+  start: '@'
+  exit: E
+  specialGround: =

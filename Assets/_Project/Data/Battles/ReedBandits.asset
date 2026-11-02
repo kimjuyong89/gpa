@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ac2ce6f3d075ed4b8b2fde5a702f9c5, type: 3}
+  m_Name: ReedBandits
+  m_EditorClassIdentifier: GPA::GPA.Combat.BattleData
+  id: "\uAC08\uB300\uBC2D_\uB3C4\uC801"
+  reward: 20
+  solo: 0
+  enemies:
+  - name: "\uAC08\uB300\uBC2D \uB3C4\uC801"
+    sprite: NinjaGray
+    ally: 0
+    row: 0
+    realm: 0
+    stats:
+      Outer: 5
+      Inner: 0
+      Light: 5
+      Con: 2
+      Wis: 0
+      Virtue: 0
+      Luck: 0
+    arts:
+    - {fileID: 11400000, guid: 289a98612b55aa74d89bade3cf7dd77f, type: 2}
+  - name: "\uB3C4\uC801 \uB450\uBAA9"
+    sprite: NinjaRed
+    ally: 0
+    row: 0
+    realm: 0
+    stats:
+      Outer: 6
+      Inner: 0
+      Light: 5
+      Con: 4
+      Wis: 0
+      Virtue: 0
+      Luck: 0
+    arts:
+    - {fileID: 11400000, guid: 289a98612b55aa74d89bade3cf7dd77f, type: 2}
+    - {fileID: 11400000, guid: 6066601b6e94ca9488cdd9b46a0abf2d, type: 2}
+  drops:
+  - item: {fileID: 11400000, guid: 177110b7c3264144f9b13755138f04fc, type: 2}
+    chance: 0.3
+  - item: {fileID: 11400000, guid: f0f88a8154480c14da7f7bc2b2b81af5, type: 2}
+    chance: 0.15
+  - item: {fileID: 11400000, guid: be96b70c0c2d76040932afd12d7c9508, type: 2}
+    chance: 0.05
+  - item: {fileID: 11400000, guid: 015a83a0e375be240bfef1a1d9e8e777, type: 2}
+    chance: 0.03

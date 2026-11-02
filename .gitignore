@@ -41,3 +41,7 @@ crashlytics-build.properties
 # OS
 .DS_Store
 Thumbs.db
+
+# Unity Test Runner ¿‹ø©π∞
+/Assets/InitTestScene*
+.vsconfig

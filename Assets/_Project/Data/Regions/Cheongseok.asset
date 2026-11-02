@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c31d3bc35b852074bb9d8ec1faa563cf, type: 3}
+  m_Name: Cheongseok
+  m_EditorClassIdentifier: GPA::GPA.World.RegionData
+  layout: 'T.T.T.T.T.T.T.T.T.T.T.T.T.T.T.T.
+
+    ................................
+
+    T.......~~~~~~~...........q....T
+
+    ........~~~g~~~......R....o.....
+
+    T.......~~~.~~~..........l.....T
+
+    ....b...~~~f~~~.....n.........w.
+
+    T.........=............,.......T
+
+    ..........=......k..............
+
+    T...c.....=..........x.....m...T
+
+    ..........=...h.................
+
+    T.........=....................T
+
+    .....w....======....======d.....
+
+    T.........=....a...............T
+
+    ...............@................
+
+    T..............=...............T
+
+    ...............=................
+
+    T...m..........=...........n...T
+
+    ...............=................
+
+    T.T.T.T.T.T.T..=.T.T.T.T.T.T.T..
+
+    ...............E................'
+  tiles:
+  - key: .
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 0, y: 12}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: ','
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 12}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: =
+    sheet: {fileID: 2800000, guid: e860d2d111d0625469b2b94e8f27f709, type: 3}
+    cell: {x: 1, y: 8}
+    size: {x: 1, y: 1}
+    solid: 0
+    ground: .
+  - key: ~
+    sheet: {fileID: 2800000, guid: e51555438d0766546a70233628d520ed, type: 3}
+    cell: {x: 11, y: 0}
+    size: {x: 1, y: 1}
+    solid: 1
+    ground: .
+  - key: T
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 2, y: 0}
+    size: {x: 2, y: 2}
+    solid: 1
+    ground: .
+  - key: R
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 16, y: 8}
+    size: {x: 2, y: 2}
+    solid: 1
+    ground: .
+  - key: h
+    sheet: {fileID: 2800000, guid: 58c8c1e63092a6e4784e1446c15439aa, type: 3}
+    cell: {x: 4, y: 0}
+    size: {x: 4, y: 3}
+    solid: 1
+    ground: .
+  - key: q
+    sheet: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    cell: {x: 7, y: 13}
+    size: {x: 1, y: 1}
+    solid: 1
+    ground: .
+    overlay: 1
+  npcs:
+  - key: a
+    name: "\uC6C0\uB9C9"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uC6C0\uB9C9"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 5, y: 8}
+  - key: b
+    name: "\uC0B0\uB098\uBB3C"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uB098\uBB3C1"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 4, y: 10}
+  - key: c
+    name: "\uC0B0\uB098\uBB3C"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uB098\uBB3C2"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 3, y: 10}
+  - key: d
+    name: "\uC0B0\uB098\uBB3C"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uB098\uBB3C3"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 7, y: 10}
+  - key: w
+    name: "\uB9C8\uB978 \uB098\uBB34"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uB098\uBB341"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 4, y: 8}
+  - key: x
+    name: "\uB9C8\uB978 \uB098\uBB34"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uB098\uBB342"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 4, y: 9}
+  - key: f
+    name: "\uACC4\uACE1"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uACC4\uACE1"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 8, y: 13}
+  - key: g
+    name: "\uD3ED\uD3EC"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uD3ED\uD3EC"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 5, y: 12}
+  - key: k
+    name: "\uBC14\uC704"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uBC14\uC704"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 15, y: 9}
+  - key: l
+    name: "\uC808\uBCBD"
+    sheet: {fileID: 0}
+    knot: "\uC0B0_\uC808\uBCBD"
+    prop: {fileID: 2800000, guid: 261a97dbcd9f81046a87b4bf1b9aa528, type: 3}
+    propCell: {x: 18, y: 9}
+  - key: m
+    name: "\uB108\uAD6C\uB9AC"
+    sheet: {fileID: 2800000, guid: 0f6ed5bce28c42ed8c5b3e7b9d88c8b3, type: 3}
+    knot: "\uC0B0_\uB108\uAD6C\uB9AC"
+  - key: n
+    name: "\uB291\uB300"
+    sheet: {fileID: 2800000, guid: 8ac20ae5cfa441c8b9139dbaa93f27d2, type: 3}
+    knot: "\uC0B0_\uC9D0\uC2B9"
+  - key: o
+    name: "\uD070 \uACF0"
+    sheet: {fileID: 2800000, guid: ba85ef3f689c4084aecefab900d08aea, type: 3}
+    knot: "\uC0B0_\uB3D9\uAD74"
+  start: '@'
+  exit: E
+  specialGround: .
