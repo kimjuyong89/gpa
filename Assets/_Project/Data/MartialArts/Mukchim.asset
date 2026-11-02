@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b62e380ccbfc054284633377850eb6a, type: 3}
+  m_Name: Mukchim
+  m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
+  displayName: "\uBB35\uCE68"
+  forms:
+  - "비묵산화"
+  - "점획"
+  - "묵적"
+  kind: 0
+  skill: 7
+  skillNeed: 0
+  lineage: 0
+  innerCost: 3
+  cooldown: 0
+  guard: 2
+  affinity: 3
+  weapon: 0
+  power: 5
+  hits: 1
+  reachesBackRow: 1
+  inflicts: 2
+  inflictChance: 0.4
+  inflictTurns: 3
+  swapsRow: 0
+  speedBuff: 0
+  evasionBuff: 0
+  buffTurns: 0
+  counter: 0
+  maxInnerBonus: 0
+  meditateBonus: 0
+  resists: 
+  onHit: 0
+  onHitChance: 0
+  onHitTurns: 0

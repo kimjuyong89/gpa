@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b62e380ccbfc054284633377850eb6a, type: 3}
+  m_Name: Hongryeoncham
+  m_EditorClassIdentifier: GPA::GPA.Combat.MartialArt
+  displayName: "\uD64D\uB828\uCC38"
+  forms:
+  - "홍련개화"
+  - "낙홍일도"
+  - "연화분신"
+  kind: 0
+  skill: 2
+  skillNeed: 0
+  lineage: 0
+  innerCost: 5
+  cooldown: 0
+  guard: 4
+  affinity: 1
+  weapon: 1
+  power: 13
+  hits: 1
+  reachesBackRow: 0
+  inflicts: 1
+  inflictChance: 0.35
+  inflictTurns: 2
+  swapsRow: 0
+  speedBuff: 0
+  evasionBuff: 0
+  buffTurns: 0
+  counter: 0
+  maxInnerBonus: 0
+  meditateBonus: 0
+  resists: 
+  onHit: 0
+  onHitChance: 0
+  onHitTurns: 0

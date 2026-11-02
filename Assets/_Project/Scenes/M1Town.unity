@@ -193,7 +193,7 @@ MonoBehaviour:
       Virtue: 3
       Luck: 2
     arts:
-    - {fileID: 11400000, guid: 289a98612b55aa74d89bade3cf7dd77f, type: 2}
+    - {fileID: 11400000, guid: db5a9289a8e14d189c9fa55e61be4d66, type: 2}
   - name: "\uC6B4\uD559"
     sprite: FighterWhite
     ally: 1
@@ -244,7 +244,7 @@ MonoBehaviour:
       Virtue: 5
       Luck: 3
     arts:
-    - {fileID: 11400000, guid: 6066601b6e94ca9488cdd9b46a0abf2d, type: 2}
+    - {fileID: 11400000, guid: 4e208973bbda49e9a74a51f5646cad1f, type: 2}
     - {fileID: 11400000, guid: 81259addc54c44d41861c92b8f61e791, type: 2}
   - name: "\uD64D\uB828"
     sprite: NinjaRed
@@ -261,8 +261,7 @@ MonoBehaviour:
       Virtue: 2
       Luck: 4
     arts:
-    - {fileID: 11400000, guid: ce7488d60ad912246994c74b264b9fd3, type: 2}
-    - {fileID: 11400000, guid: 6b3e1d54630a83543a5a484ef40f67bd, type: 2}
+    - {fileID: 11400000, guid: 5667e969bd4a4752b0c7a8c7bb23a0b0, type: 2}
     - {fileID: 11400000, guid: 728e4849d2e882f46b75416f787db82b, type: 2}
   - name: "\uBB35\uD5A5"
     sprite: Woman
@@ -279,7 +278,7 @@ MonoBehaviour:
       Virtue: 4
       Luck: 4
     arts:
-    - {fileID: 11400000, guid: 6b3e1d54630a83543a5a484ef40f67bd, type: 2}
+    - {fileID: 11400000, guid: 2b54c97a93f54bbc929a11a2d5409150, type: 2}
     - {fileID: 11400000, guid: 81259addc54c44d41861c92b8f61e791, type: 2}
   - name: "\uC720\uC18C\uC18C"
     sprite: Villager
@@ -296,7 +295,7 @@ MonoBehaviour:
       Virtue: 6
       Luck: 3
     arts:
-    - {fileID: 11400000, guid: 6b3e1d54630a83543a5a484ef40f67bd, type: 2}
+    - {fileID: 11400000, guid: f4e4d9c58d184b83920ef0f8cc9fc20b, type: 2}
   - name: "\uB2A5\uC18C"
     sprite: FighterWhite
     ally: 1
@@ -312,8 +311,8 @@ MonoBehaviour:
       Virtue: 4
       Luck: 3
     arts:
+    - {fileID: 11400000, guid: 1d2a289bb5e74015a46913230f987189, type: 2}
     - {fileID: 11400000, guid: 8642f3a8fe4ee204689db5c818bbc54d, type: 2}
-    - {fileID: 11400000, guid: 289a98612b55aa74d89bade3cf7dd77f, type: 2}
     - {fileID: 11400000, guid: 81259addc54c44d41861c92b8f61e791, type: 2}
   startingArts:
   - {fileID: 11400000, guid: 289a98612b55aa74d89bade3cf7dd77f, type: 2}
